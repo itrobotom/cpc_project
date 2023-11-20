@@ -1,0 +1,24 @@
+.custom-card {
+    width: 340px;
+    height: 560px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.custom-card:hover {
+    transform: scale(1.03);
+}
+
+.card-action-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-action-area:hover {
+    transform: scale(1.03);
+}
