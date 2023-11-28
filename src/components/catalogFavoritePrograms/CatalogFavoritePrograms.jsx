@@ -1,29 +1,30 @@
 import { React, useState, useEffect } from "react";
 import programsData from '../../data/programs-data.json';
 import { Box, Typography } from "@mui/material";
-import { CardProgram } from "../cardProgram/CardProgram"
+import { CardProgram } from "../cardProgram/CardProgram";
+import { useSelector } from "react-redux"; 
 
 const CatalogFavoritePrograms = () => {
-    // const [countCardsFavorite, setCountCardsFavorite] = useState(0);
+    //подписываемся на список избранных в сторе
+    const favoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
+    //заводим стейт, чтобы делать перерендер, когда приходит новый id карточки
+    const [updatedFavoriteProgramIds, setUpdatedFavoriteProgramIds] = useState([]); 
+    console.log("Изменения в релаьном времени раздела избранных програм: ", favoriteProgramsId);
+    
     // Фильтруем программы, чтобы получить только избранные
     const favoritePrograms = programsData.filter(program => localStorage.getItem(program.id) !== null);
     // Вычисляем количество избранных программ
     const countCardsFavorite = favoritePrograms.length;
-    const catalogProgramList = programsData.map((program) => 
-    {
-        const isFavoriteCardDefault = (localStorage.getItem(program.id) !== null)
-        console.log(`Программа с ${program.id} в избранном?`, isFavoriteCardDefault);
-        if (isFavoriteCardDefault){
-            return (
-                <div key={program.id}>
-                    <CardProgram program={program} isFavoriteCardDefault={isFavoriteCardDefault}/>
-                </div>
-            )
-        }
-        
-            
-        
-    });
+    
+    useEffect(() => {
+        setUpdatedFavoriteProgramIds(favoriteProgramsId);
+    }, [favoriteProgramsId]);
+
+    const catalogProgramListFavorite = favoritePrograms.map((program) => (
+        <div key={program.id}>
+            <CardProgram program={program} isFavoriteCardDefault={true} />
+        </div>
+    ));
 
     return (countCardsFavorite > 0 ? (
         <>
@@ -52,7 +53,7 @@ const CatalogFavoritePrograms = () => {
             }}
             >
                 
-                {catalogProgramList}
+                {catalogProgramListFavorite}
             </Box>
         </>
     ) : (

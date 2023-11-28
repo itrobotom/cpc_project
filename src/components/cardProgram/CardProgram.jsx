@@ -6,32 +6,29 @@ import { Link } from "react-router-dom";
 import { React, useState } from "react";
 import './CardProgram.css'; 
 
+import { addFavorite, removeFavorite } from "../../store/reducers/FavoriteProgramsSliceReducer"
+import {useDispatch, useSelector} from "react-redux"; 
+
+//карточка добавляется и удаляется как в сторе, так и в localstorage
+
 function CardProgram({program, isFavoriteCardDefault}) {
+    
+    const dispatch = useDispatch();
     const idCard = program.id; 
     console.log('Внутри карты избранное', isFavoriteCardDefault);
-    //console.log(program.posterPath);
     const [isFavoriteCard, setIsFavoriteCard] = useState(isFavoriteCardDefault);
     const handleFavoriteBtn = () => {
         console.log(localStorage.getItem(idCard));
         if(localStorage.getItem(idCard) !== null) {
             localStorage.removeItem(idCard);
             setIsFavoriteCard(!isFavoriteCard);
-            
-            //УДАЛЯЕМ ИЗ СТОРА
+            dispatch(removeFavorite(idCard));
         } else {
             localStorage.setItem(idCard, idCard);
             setIsFavoriteCard(!isFavoriteCard);
-
-            //ДОБАВЛЯЕМ В СТОР
+            dispatch(addFavorite(idCard));
         }
-        //localStorage.setItem(idCard, idCard);
-        //alert(idCard);
-        //console.log(idCard);
-        
     }
-
-    //ПИШЕМ ФУНКЦИЮ ДОБАВЛЕНИЯ И УДАЛЕНИЕ ИЗ СТОРА ПРИ КЛИКЕ НА ИЗБРАННОЕ
-
 
     return (
         <Card className="custom-card" sx = {{ width: 340, height: 560, mr: '20px', mb: '20px' }}>

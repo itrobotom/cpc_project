@@ -7,9 +7,10 @@ const CatalogPrograms = () => {
     
     
     const catalogProgramList = programsData.map((program) => {
+        const isFavoriteCardDefault = (localStorage.getItem(program.id) !== null);
         return (
             <div key={program.id}>
-                <CardProgram program={program} />
+                <CardProgram program={program} isFavoriteCardDefault={isFavoriteCardDefault}/>
             </div>
         )
     });
@@ -19,7 +20,7 @@ const CatalogPrograms = () => {
         sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "space-around",
+            justifyContent: "start",
             alignContent: "flex-start",
             // расстояние между карточками
             // gap: "0rem", 
