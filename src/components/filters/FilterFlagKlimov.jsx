@@ -1,14 +1,37 @@
+import React, { useEffect, useState } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
+import { useDispatch, useSelector } from "react-redux"; 
+import { setTestKlimov } from "../../store/reducers/FilterPanelSlice"
+
+
 
 function FilterFlagKlimov() {
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+    const isCheckBoxAction = useSelector(state => state.valueFilters.isPassedTestKlimov);
+    const [isCheckBox, setIsCheckBox] = useState(isCheckBoxAction);
+
+    console.log('забрали из дефолта флаг климова', isCheckBoxAction);
+    const dispatch = useDispatch();
+    const handleFilterKlimov = () => { 
+        if(isCheckBox) {
+            setIsCheckBox(false);
+            dispatch(setTestKlimov(false));
+        } else {
+            setIsCheckBox(true);
+            dispatch(setTestKlimov(true));
+        }
+    }
+
     return(
         <Box sx={{ mt: 2 }}>
-            <FormControlLabel control={<Checkbox defaultChecked color="success"/>} label="Прошел тест по профоориентации (с 11 лет)" />
-        </Box>
-        
+            <FormControlLabel 
+                control={<Checkbox defaultChecked color="success"/>} 
+                label="Прошел тест по профоориентации (с 11 лет)" 
+                checked={isCheckBoxAction ? true : false}
+                onChange={handleFilterKlimov}
+            />
+        </Box> 
     )
 }
 

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { React, useState } from "react";
 import './CardProgram.css'; 
 
-import { addFavorite, removeFavorite } from "../../store/reducers/FavoriteProgramsSliceReducer"
+import { addFavorite, removeFavorite } from "../../store/reducers/FavoriteProgramsSlice"
 import {useDispatch, useSelector} from "react-redux"; 
 
 //карточка добавляется и удаляется как в сторе, так и в localstorage
@@ -15,7 +15,7 @@ function CardProgram({program, isFavoriteCardDefault}) {
     
     const dispatch = useDispatch();
     const idCard = program.id; 
-    console.log('Внутри карты избранное', isFavoriteCardDefault);
+    //console.log('Внутри карты избранное', isFavoriteCardDefault);
     const [isFavoriteCard, setIsFavoriteCard] = useState(isFavoriteCardDefault);
     const handleFavoriteBtn = () => {
         console.log(localStorage.getItem(idCard));

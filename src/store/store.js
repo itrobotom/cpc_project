@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import favoriteProgramsSlice from "./reducers/FavoriteProgramsSliceReducer";
+import favoriteProgramsSlice from "./reducers/FavoriteProgramsSlice";
+import valueFilterSlice from "./reducers/FilterPanelSlice";
 
 const rootReducer = combineReducers({
     favoritePrograms: favoriteProgramsSlice, 
+    valueFilters: valueFilterSlice,
 })
 export const store = configureStore({
     reducer: rootReducer,

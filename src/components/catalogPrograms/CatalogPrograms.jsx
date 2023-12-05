@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import programsData from '../../data/programs-data.json';
 import { Box, Typography } from "@mui/material";
 import { CardProgram } from "../cardProgram/CardProgram"
+import { useSelector, useDispatch } from "react-redux";
 
 const CatalogPrograms = () => {
+
+    const ageIntervalSlider = useSelector(state => state.valueFilters.ageRange);
+    //console.log('из каталога программ', ageIntervalSlider);
+    const inputName = useSelector(state => state.valueFilters.nameProgram);
     
-    
-    const catalogProgramList = programsData.map((program) => {
+    const catalogProgramListFilter = programsData.filter((program) => {
+        //проверяем, чтобы хотя бы одна одна из точек экстремума слайдера лежала внутри интервала для программы
+        //или наоборот, проверяем, чтобы хотя бы одна из крайних границ программы лежит внутри границ слайдера
+        const includedInRange = ((ageIntervalSlider.min >= program.ageRange.min) && (ageIntervalSlider.min <= program.ageRange.max))
+                                || ((ageIntervalSlider.max >= program.ageRange.min) && (ageIntervalSlider.max <= program.ageRange.max)) 
+                                || ((program.ageRange.min >= ageIntervalSlider.min) && (program.ageRange.min <= ageIntervalSlider.max)) 
+                                || ((program.ageRange.max >= ageIntervalSlider.min) && (program.ageRange.max <= ageIntervalSlider.max));
+
+        //добавим фильтр по отбору по имени
+        const includedSearchName =  program.title.toLowerCase().includes(inputName);
+
+        if (includedInRange && includedSearchName){ 
+            return program;
+        }
+    });
+    useEffect(() => {
+        console.log('из юсэффекта каталога программ', ageIntervalSlider);
+        console.log('из юсэффекта название программы', inputName);
+    }, [ageIntervalSlider, inputName])
+
+    const catalogProgramList = catalogProgramListFilter.map((program) => {
         const isFavoriteCardDefault = (localStorage.getItem(program.id) !== null);
         return (
             <div key={program.id}>
@@ -15,7 +39,7 @@ const CatalogPrograms = () => {
         )
     });
 
-    return (programsData.length > 0 ? (
+    return (catalogProgramListFilter.length > 0 ? (
         <Box
         sx={{
             display: "flex",
@@ -45,7 +69,7 @@ const CatalogPrograms = () => {
                     },
                 }}
             >
-                <i>Программы отсутсвуют</i>
+                <i>Программы по заданным параметрам поиска отсутсвуют</i>
             </Typography>
         </Box>
         )
