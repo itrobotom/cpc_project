@@ -18,8 +18,8 @@ function CardProgram({program, isFavoriteCardDefault}) {
     //console.log('Внутри карты избранное', isFavoriteCardDefault);
     const [isFavoriteCard, setIsFavoriteCard] = useState(isFavoriteCardDefault);
     const handleFavoriteBtn = () => {
-        console.log(localStorage.getItem(idCard));
-        if(localStorage.getItem(idCard) !== null) {
+        //console.log(localStorage.getItem(idCard));
+        if(localStorage.getItem(idCard) !== null) { //если карточка в избранном удаляем, иначе добавляем в ls
             localStorage.removeItem(idCard);
             setIsFavoriteCard(!isFavoriteCard);
             dispatch(removeFavorite(idCard));
