@@ -3,12 +3,31 @@ import programsData from '../../data/programs-data.json';
 import { Box, Typography } from "@mui/material";
 import { CardProgram } from "../cardProgram/CardProgram"
 import { useSelector, useDispatch } from "react-redux";
+import { setTypeProgram, setTypeKlimovProgram } from "../../store/reducers/FilterPanelSlice"
 
+const selectTypeProgramDefault = ["технические направления и инженерия", 
+                                  "гуманитарные и социальные",
+                                  "естественно-научные", 
+                                  "искусство и дизайн", 
+                                  "экономика и бизнес", 
+                                  "патриотические", 
+                                  "иностранные языки", 
+                                  "экология и окружающая среда",
+                                  "программирование"];
+const selectTypeKlkimovProgramDefault = ["человек-природа",
+                                        "Человек-техника", 
+                                        "Человек-человек", 
+                                        "Человек-знаковая система", 
+                                        "Человек-художественный образ"];
 const CatalogPrograms = () => {
 
     const ageIntervalSlider = useSelector(state => state.valueFilters.ageRange);
-    //console.log('из каталога программ', ageIntervalSlider);
     const inputName = useSelector(state => state.valueFilters.nameProgram);
+    const typesProgramStore = useSelector(state => state.valueFilters.type);
+
+    const dispatch = useDispatch();
+    //dispatch(resetFilter()); 
+    const isPassedTestKlimov = useSelector(state => state.valueFilters.isPassedTestKlimov);
     
     const catalogProgramListFilter = programsData.filter((program) => {
         //проверяем, чтобы хотя бы одна одна из точек экстремума слайдера лежала внутри интервала для программы
@@ -21,15 +40,37 @@ const CatalogPrograms = () => {
         //добавим фильтр по отбору по имени
         const includedSearchName =  program.title.toLowerCase().includes(inputName);
 
-        if (includedInRange && includedSearchName){ 
+        let includedType = true; 
+
+        //сбрасываем в дефолт (на все типы) при переключении флажка (Климов/обычные типы), иначе фильтроваться будет по обоим типам фильтра
+        isPassedTestKlimov ? dispatch(setTypeProgram(selectTypeProgramDefault)) : dispatch(setTypeKlimovProgram(selectTypeKlkimovProgramDefault)); 
+
+        if(typesProgramStore.length < 9) { //если длина массива 9, то каждая программа попадет в отображаение, как буд-то выбраны все типы, но как только мы выберем нужные пункты, нужно отфильтровать по критерию
+            //const includedType = program.type;
+            for (let i = 0; i < program.type.length; i++) { //переберем все типы для программы (отмеченные внутри самой программы автором)
+                //console.log(count)
+                includedType = typesProgramStore.some(item => item === program.type[i]);
+                if (includedType){
+                    break; //прерываем for как только встретили попавшийся тип, иначе если поседний не встретится, то программа не найдется
+                }
+                //console.log("найден тип программы", includedType);
+            }
+        } else {
+            includedType = true; 
+        }
+
+        if (includedInRange && includedSearchName && includedType){ 
             return program;
         }
     });
     useEffect(() => {
         console.log('из юсэффекта каталога программ', ageIntervalSlider);
         console.log('из юсэффекта название программы', inputName);
-    }, [ageIntervalSlider, inputName])
+    }, [ageIntervalSlider, inputName, typesProgramStore])
 
+    //создаем новый массив программ, где будут отображаться программы с верной пометкой статуса избранных 
+
+    //ПРОБЛЕМА!!!! пофиксить отрисовку состояния избранного, т.к. мы можем менять ее состояние в компоненте списка избранных, тогда только после обновления страницы меняется состояние лайка сейчас
     const catalogProgramList = catalogProgramListFilter.map((program) => {
         const isFavoriteCardDefault = (localStorage.getItem(program.id) !== null);
         return (
