@@ -1,36 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const selectTypeProgramDefault = ["технические направления и инженерия", 
+                                    "гуманитарные и социальные",
+                                    "естественно-научные", 
+                                    "искусство и дизайн", 
+                                    "экономика и бизнес", 
+                                    "патриотические", 
+                                    "иностранные языки", 
+                                    "экология и окружающая среда",
+                                    "программирование"];
+const selectTypeKlkimovProgramDefault = ["Человек-природа",
+                                        "Человек-техника", 
+                                        "Человек-человек", 
+                                        "Человек-знаковая система", 
+                                        "Человек-художественный образ"];
+
 const INIT_FILTER_STATE = {
     nameProgram: "",
     ageRange: { "min": 6, "max": 18 },
     isPassedTestKlimov: false,
-    type: ["технические направления и инженерия", 
-            "гуманитарные и социальные",
-            "естественно-научные", 
-            "искусство и дизайн", 
-            "экономика и бизнес", 
-            "патриотические", 
-            "иностранные языки", 
-            "экология и окружающая среда",
-            "программирование"],
-    typeKlimov: ["Человек-природа",
-                "Человек-техника", 
-                "Человек-человек", 
-                "Человек-знаковая система", 
-                "Человек-художественный образ"],
+    type: selectTypeProgramDefault,
+    typeKlimov: selectTypeKlkimovProgramDefault,
     isOnlyBudgetPrograms: false,
 }
-
-//сбросить фильтры, то есть поставить все в init_filter_state
-
-//установить год обучения программ
 
 const valueFilterSlice = createSlice({
     name: 'setFilter',
     initialState: INIT_FILTER_STATE,
     reducers: {
         resetFilter() {
-            return INIT_FILTER_STATE;
+            return { ...INIT_FILTER_STATE };
         },
         setAge(state, action) {
             state.ageRange.min = action.payload[0];
@@ -41,6 +40,30 @@ const valueFilterSlice = createSlice({
         },
         setTestKlimov(state, action) {
             state.isPassedTestKlimov = action.payload;
+        },
+        setTypeProgram(state, action) {
+            return {
+                ...state,
+                type: action.payload,
+            };
+        },
+        cleanTypeProgram(state) {
+            return {
+                ...state,
+                type: [],
+            };
+        },
+        setTypeKlimovProgram(state, action) {
+            return {
+                ...state,
+                typeKlimov: action.payload,
+            };
+        },
+        cleanTypeKlimovProgram(state) {
+            return {
+                ...state,
+                typeKlimov: [],
+            };
         }
     }
 })
@@ -52,5 +75,5 @@ const valueFilterSlice = createSlice({
 //установка типов программ и рендер по этим типам
 
 export { INIT_FILTER_STATE }
-export const { resetFilter, setAge, inputName, setTestKlimov } = valueFilterSlice.actions;
+export const { resetFilter, setAge, inputName, setTestKlimov, setTypeProgram, cleanTypeProgram, setTypeKlimovProgram, cleanTypeKlimovProgram } = valueFilterSlice.actions;
 export default valueFilterSlice.reducer 
