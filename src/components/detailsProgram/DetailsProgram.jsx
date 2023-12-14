@@ -222,7 +222,7 @@ export function DetailsProgram() {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell style={{ width: '30%', borderBottom: 'none', verticalAlign: 'top', fontSize: '18px' }} >Творечское объединение</TableCell>
+                                    <TableCell style={{ width: '30%', borderBottom: 'none', verticalAlign: 'top', fontSize: '18px' }} >Творечское объединение:</TableCell>
                                     <TableCell style={{ width: '70%', borderBottom: 'none', fontSize: '18px' }}>
                                         {/* <Link href="#" target="_blank" rel="noopener noreferrer">
                                             VK
@@ -239,7 +239,7 @@ export function DetailsProgram() {
                                 <TableRow>
                                     <TableCell style={{ width: '30%', borderBottom: 'none', fontSize: '18px' }} >Преподают педагоги: </TableCell>
                                     <TableCell style={{ width: '70%', borderBottom: 'none', fontSize: '18px' }}>
-                                        <IconButton
+                                        {/* <IconButton
                                             onClick={() => window.open('https://cpc.tomsk.ru/nashi-sotrudniki/ivanov-sergey-olegovich/')}
                                             size="small"
                                             style={{ marginRight: '8px' }} // Расстояние между кнопками
@@ -251,7 +251,15 @@ export function DetailsProgram() {
                                             size="small"
                                         >
                                             <img src={imagePath2} alt="Педагог 2" style={{ width: '128px', height: '128px', borderRadius: '50%' }} />
-                                        </IconButton>
+                                        </IconButton> */}
+                                        <Link href="https://cpc.tomsk.ru/nashi-sotrudniki/ivanov-sergey-olegovich/" target="_blank" rel="noopener noreferrer">
+                                        Иванов Серегей Олегович
+                                        </Link> 
+                                        <Typography>
+                                        </Typography>
+                                        <Link href="https://cpc.tomsk.ru/nashi-sotrudniki/chernyih-aleksey-andreevich/" target="_blank" rel="noopener noreferrer">
+                                        Черных Алексей Андреевич 
+                                        </Link> 
                                 </TableCell>
                                 </TableRow>
                             </TableBody>

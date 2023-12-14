@@ -9,7 +9,7 @@ const selectTypeProgramDefault = ["технические направления
                                     "иностранные языки", 
                                     "экология и окружающая среда",
                                     "программирование"];
-const selectTypeKlkimovProgramDefault = ["человек-природа",
+const selectTypeKlkimovProgramDefault = ["Человек-природа",
                                         "Человек-техника", 
                                         "Человек-человек", 
                                         "Человек-знаковая система", 

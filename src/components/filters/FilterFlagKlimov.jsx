@@ -8,10 +8,8 @@ import { setTestKlimov } from "../../store/reducers/FilterPanelSlice"
 
 
 function FilterFlagKlimov() {
-    const isCheckBoxAction = useSelector(state => state.valueFilters.isPassedTestKlimov);
+    const isCheckBoxAction = useSelector(state => state.valueFilters.isPassedTestKlimov); //забрали из дефолта флаг климова
     const [isCheckBox, setIsCheckBox] = useState(isCheckBoxAction);
-
-    console.log('забрали из дефолта флаг климова', isCheckBoxAction);
     const dispatch = useDispatch();
     const handleFilterKlimov = () => { 
         if(isCheckBox) {
