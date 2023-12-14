@@ -17,7 +17,7 @@ import { Box, Typography, IconButton, CardMedia, Link } from "@mui/material";
 import { useParams } from 'react-router-dom';
 import programsData from '../../data/programs-data.json';
 import { ImageSlider } from '../imageSlider/ImageSlider';
-
+import { useSelector } from "react-redux";
 
 export function DetailsProgram() {
     //programm_id это как раз то, что передано в роуте 
@@ -36,7 +36,8 @@ export function DetailsProgram() {
     const widthTable1 = 40;
     const widthTable2 = 40;
     
-    const favoriteFilmFlag = true; 
+    const arrFavoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
+    const isFavoriteCardDefault = (arrFavoriteProgramsId.includes(program.id));
     return(
         <>
             {/* <Typography 
@@ -91,7 +92,7 @@ export function DetailsProgram() {
                         >
                             {/* <StarBorderIcon style={{ color: 'gray' }}/> */}
                             {/* <StarBorderIcon style={{ color: favoriteFilmFlag ? 'red' : 'gray' }}/> */}
-                            {favoriteFilmFlag ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
+                            { isFavoriteCardDefault ? <ThumbUpIcon /> : <ThumbUpOffAltIcon /> }
                         </IconButton>
                     </Box>
                     <CardMedia
@@ -260,8 +261,6 @@ export function DetailsProgram() {
                     
                 </Box>
             </Box>
-
-
         </>
     )
 }

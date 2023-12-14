@@ -10,7 +10,7 @@ function FilterLink() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            mt: 3,
+            mt: 2,
         }}
       >
         <Typography 

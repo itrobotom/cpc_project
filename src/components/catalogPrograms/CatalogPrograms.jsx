@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import programsData from '../../data/programs-data.json';
 import { Box, Typography } from "@mui/material";
 import { CardProgram } from "../cardProgram/CardProgram"
@@ -19,16 +19,20 @@ const selectTypeKlkimovProgramDefault = ["человек-природа",
                                         "Человек-человек", 
                                         "Человек-знаковая система", 
                                         "Человек-художественный образ"];
+const NUM_TYPES = selectTypeProgramDefault.length;
+const NUM_TYPES_KLIMOV = selectTypeKlkimovProgramDefault.length;
 const CatalogPrograms = () => {
 
     const ageIntervalSlider = useSelector(state => state.valueFilters.ageRange);
     const inputName = useSelector(state => state.valueFilters.nameProgram);
     const typesProgramStore = useSelector(state => state.valueFilters.type);
-
-    const dispatch = useDispatch();
-    //dispatch(resetFilter()); 
+    const typePay = useSelector(state => state.valueFilters.fundingType);
     const isPassedTestKlimov = useSelector(state => state.valueFilters.isPassedTestKlimov);
+    const selectTypeKlimov = useSelector(state => state.valueFilters.typeKlimov); 
+    const dispatch = useDispatch();
+    const arrFavoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
     
+    //выбираем программы по фильтрам
     const catalogProgramListFilter = programsData.filter((program) => {
         //проверяем, чтобы хотя бы одна одна из точек экстремума слайдера лежала внутри интервала для программы
         //или наоборот, проверяем, чтобы хотя бы одна из крайних границ программы лежит внутри границ слайдера
@@ -40,13 +44,18 @@ const CatalogPrograms = () => {
         //добавим фильтр по отбору по имени
         const includedSearchName =  program.title.toLowerCase().includes(inputName);
 
-        let includedType = true; 
+        //фильтр по типу финансирования: payType - платная, noPayType-не платная, allPayType - платная и не платная 
+        let sortTypePay = true; //по умолчанию allPayType
+        ((typePay === "noPayType") === program.budgetProgram) ? sortTypePay = true :  sortTypePay = false; //выбран тип не платные и он совпадает с пунктом budgetProgram в самой программе тогда true
+        if (typePay === "allPayType"){
+            sortTypePay = true; 
+        }
 
         //сбрасываем в дефолт (на все типы) при переключении флажка (Климов/обычные типы), иначе фильтроваться будет по обоим типам фильтра
         isPassedTestKlimov ? dispatch(setTypeProgram(selectTypeProgramDefault)) : dispatch(setTypeKlimovProgram(selectTypeKlkimovProgramDefault)); 
-
-        if(typesProgramStore.length < 9) { //если длина массива 9, то каждая программа попадет в отображаение, как буд-то выбраны все типы, но как только мы выберем нужные пункты, нужно отфильтровать по критерию
-            //const includedType = program.type;
+        
+        let includedType = true; //тип в фильтре выбран по умолчанию
+        if(typesProgramStore.length < NUM_TYPES) { //если длина массива NUM_TYPES - 9, то каждая программа попадет в отображаение, как буд-то выбраны все типы, но как только мы выберем нужные пункты, нужно отфильтровать по критерию
             for (let i = 0; i < program.type.length; i++) { //переберем все типы для программы (отмеченные внутри самой программы автором)
                 //console.log(count)
                 includedType = typesProgramStore.some(item => item === program.type[i]);
@@ -59,20 +68,26 @@ const CatalogPrograms = () => {
             includedType = true; 
         }
 
-        if (includedInRange && includedSearchName && includedType){ 
+        let includedTypeKlimov = true; //тип в фильтре выбран по умолчанию
+        if(selectTypeKlimov.length < NUM_TYPES_KLIMOV) { //если длина массива 9, то каждая программа попадет в отображаение, как буд-то выбраны все типы, но как только мы выберем нужные пункты, нужно отфильтровать по критерию
+            for (let i = 0; i < program.type.length; i++) { //переберем все типы для программы (отмеченные внутри самой программы автором)
+                includedTypeKlimov = selectTypeKlimov.some(item => item === program.typeKlimov[i]);
+                if (includedTypeKlimov){
+                    break; //прерываем for как только встретили попавшийся тип, иначе если поседний не встретится, то программа не найдется
+                }
+                //console.log("найден тип программы", includedTypeKlimov);
+            }
+        } else {
+            includedTypeKlimov = true; 
+        }
+
+        if (includedInRange && includedSearchName && includedType && sortTypePay && includedTypeKlimov){ 
             return program;
         }
     });
-    useEffect(() => {
-        console.log('из юсэффекта каталога программ', ageIntervalSlider);
-        console.log('из юсэффекта название программы', inputName);
-    }, [ageIntervalSlider, inputName, typesProgramStore])
-
-    //создаем новый массив программ, где будут отображаться программы с верной пометкой статуса избранных 
-
-    //ПРОБЛЕМА!!!! пофиксить отрисовку состояния избранного, т.к. мы можем менять ее состояние в компоненте списка избранных, тогда только после обновления страницы меняется состояние лайка сейчас
+    
     const catalogProgramList = catalogProgramListFilter.map((program) => {
-        const isFavoriteCardDefault = (localStorage.getItem(program.id) !== null);
+        const isFavoriteCardDefault = (arrFavoriteProgramsId.includes(program.id));  
         return (
             <div key={program.id}>
                 <CardProgram program={program} isFavoriteCardDefault={isFavoriteCardDefault}/>

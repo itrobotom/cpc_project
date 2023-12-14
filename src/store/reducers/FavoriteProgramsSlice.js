@@ -26,7 +26,17 @@ const favoriteProgramsSlice = createSlice({
             if (index !== -1) {
                 state.arrIdFavoritePrograms.splice(index, 1); 
             }
-        }
+        },
+        // addFavoriteProgram(state, action){
+        //     // Проверим, не добавлен ли уже этот ID в массив (при повтороном рендеринге 3 раза добавляет новый элемент)
+        //     if (!state.arrFavoritePrograms.includes(action.payload)) {
+        //         // Создаем объект программы с ID и добавляем его в массив
+        //         state.arrFavoritePrograms.concat(action.payload);
+        //     }
+        // },
+        // removeFavoriteProgram(state, action){
+        //     state.arrFavoritePrograms = state.arrFavoritePrograms.filter((elem) => (elem !== action.payload));
+        // }
     }
 })
 

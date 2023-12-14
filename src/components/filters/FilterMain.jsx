@@ -5,7 +5,7 @@ import { FilterAge } from "./FilterAge";
 import { FilterFlagKlimov } from "./FilterFlagKlimov";
 import { FilterTypeProgramm } from "./FilterTypeProgram";
 import { FilterKlimov } from "./FilterKlimov";
-import { FilterFlagTypePay } from "./FilterFlagTypePay";
+import { FilterTypePay } from "./FilterTypePay";
 import { FiltersInstuction } from "./FiltersInstruction";
 import { FilterLink } from "./FilterLink";
 import { useDispatch, useSelector } from "react-redux"; 
@@ -39,14 +39,14 @@ function FiltersMain() {
           p: "1rem 1rem 3rem 1rem",
         }}
       >
-        <Typography variant="h6">Поиск по фильтрам</Typography>
+        <Typography variant="h6" sx={{mb: 2}}>Поиск по фильтрам</Typography>
         <SearchNameProgram />
         <FilterAge />
         <FilterFlagKlimov />
         {/* отображаем фильтр либо по климову, либо по типу программ */}
         {isPassedTestKlimov ? <FilterKlimov /> : <FilterTypeProgramm />}
         
-        <FilterFlagTypePay />
+        <FilterTypePay />
         <FiltersReset />
         <FiltersInstuction />
         <FilterLink />

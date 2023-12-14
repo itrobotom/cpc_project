@@ -21,7 +21,8 @@ const INIT_FILTER_STATE = {
     isPassedTestKlimov: false,
     type: selectTypeProgramDefault,
     typeKlimov: selectTypeKlkimovProgramDefault,
-    isOnlyBudgetPrograms: false,
+    fundingType: "allPayType", // payType - платная, noPayType-не платная, allPayType - платная и не платная 
+    arrFavoritePrograms: [],
 }
 
 const valueFilterSlice = createSlice({
@@ -35,45 +36,34 @@ const valueFilterSlice = createSlice({
             state.ageRange.min = action.payload[0];
             state.ageRange.max = action.payload[1];
         },
-        inputName(state, action) {
+        setInputName(state, action) {
             state.nameProgram = action.payload;
         },
         setTestKlimov(state, action) {
             state.isPassedTestKlimov = action.payload;
         },
         setTypeProgram(state, action) {
-            return {
-                ...state,
-                type: action.payload,
-            };
+            state.type = action.payload;
         },
         cleanTypeProgram(state) {
-            return {
-                ...state,
-                type: [],
-            };
+            state.type = [];
         },
         setTypeKlimovProgram(state, action) {
-            return {
-                ...state,
-                typeKlimov: action.payload,
-            };
+            state.typeKlimov = action.payload;
         },
         cleanTypeKlimovProgram(state) {
-            return {
-                ...state,
-                typeKlimov: [],
-            };
+            state.typeKlimov = [];
+        },
+        selectTypePay(state, action) {
+            state.fundingType = action.payload; 
         }
     }
 })
-
-//изменить флаг показать бюджетные программы
 
 //изменить флаг прохождения программ
 
 //установка типов программ и рендер по этим типам
 
 export { INIT_FILTER_STATE }
-export const { resetFilter, setAge, inputName, setTestKlimov, setTypeProgram, cleanTypeProgram, setTypeKlimovProgram, cleanTypeKlimovProgram } = valueFilterSlice.actions;
+export const { resetFilter, setAge, setInputName, setTestKlimov, setTypeProgram, cleanTypeProgram, setTypeKlimovProgram, cleanTypeKlimovProgram, selectTypePay } = valueFilterSlice.actions;
 export default valueFilterSlice.reducer 
