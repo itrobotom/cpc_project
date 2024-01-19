@@ -9,18 +9,33 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CatalogProgramsPage } from "./pages/catalogProgramsPage/CatalogProgramsPage"
 import { DetailsProgramPage } from "./pages/detailsProgramPage/DetailsProgramPage"
+import { MainPage } from "./pages/mainPage/MainPage";
+import { Login } from "./pages/login/Login";
+import { NewsPage } from "./pages/newsPage/NewsPage";
 
 function App() {
 	const router = createBrowserRouter([
 		{
 			path: "/",
-			element: <CatalogProgramsPage />,
+			element: <MainPage />,
 			// ДОБАВИТЬ ERROR
 		},
 		{
-			path: "description_programm/:programm_id",
+			path: "/learn",
+			element: <CatalogProgramsPage />,
+		},
+		{
+			path: "/learn/description_programm/:programm_id",
 			element: <DetailsProgramPage />,
 		},
+		{
+			path: "/login",
+			element: <Login />,
+		},
+		{
+			path: "/news",
+			element: <NewsPage />,
+		}
     // programm_id обычно получают из loader с помощью которого делают асинхронный запрос на сервер
 	]);
 

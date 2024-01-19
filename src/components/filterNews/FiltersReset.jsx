@@ -1,0 +1,36 @@
+import { Box, Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux"; 
+import { setInputName } from "../../store/reducers/FilterNewsPanelSlice"
+import { resetFilter } from "../../store/reducers/FilterNewsPanelSlice"
+
+//ПРИ СБРОСЕ ФИЛЬТРОВ ВОЗВРАЩАТЬ СТОР НА ПАРАМЕТРЫ ПО УМОЛЧАНИЮ каждой настройки фильтра
+function FiltersReset() {
+  const dispatch = useDispatch();
+  
+  const handleResetFilter = () => {
+    dispatch(resetFilter()); 
+    dispatch(setInputName("")); //обнулить поле ввода поиска программ 
+  }
+  
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+        mt: "20px",
+      }}
+    >
+      <Button 
+        onClick={handleResetFilter}
+        variant="outlined" color="error"
+      >
+        Сброс фильтров
+      </Button>
+    </Box>
+  );
+}
+  
+export { FiltersReset };
+  

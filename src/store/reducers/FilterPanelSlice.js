@@ -31,7 +31,7 @@ const valueFilterSlice = createSlice({
     reducers: {
         resetFilter() {
             return { ...INIT_FILTER_STATE };
-        },
+        },  
         setAge(state, action) {
             state.ageRange.min = action.payload[0];
             state.ageRange.max = action.payload[1];

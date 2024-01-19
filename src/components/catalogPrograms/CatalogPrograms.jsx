@@ -105,9 +105,10 @@ const CatalogPrograms = () => {
             // расстояние между карточками
             // gap: "0rem", 
             // расстояние для пространства блока с фильтрами
-            pl: "23.5rem",
+            pl: "26.5rem",
             "@media(max-width: 50rem)": {
-            p: "0rem",
+                p: "0rem",
+                ml: "2rem"
             },
         }}
         >

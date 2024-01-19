@@ -1,7 +1,9 @@
 import React from 'react';
+import { Box } from "@mui/material";
 import { DetailsProgram } from '../../components/detailsProgram/DetailsProgram';
 // import { useParams } from 'react-router-dom';
 import { useLoaderData } from "react-router-dom";
+import Header from "../../components/header/Header.jsx"
 
 export function DetailsProgramPage(props) {
   // const { match } = props;
@@ -11,6 +13,15 @@ export function DetailsProgramPage(props) {
   //const { id } = useParams();
   //console.log("Вот id открытой программы", program.id); 
   return(
-    <DetailsProgram />
+    <div>
+      <Header/>
+      <Box
+        sx={{
+          pt: "110px"
+        }}
+      > 
+        <DetailsProgram />
+      </Box>
+    </div>
   )
 }

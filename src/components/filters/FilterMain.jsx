@@ -28,6 +28,8 @@ function FiltersMain() {
           position: "static",
         },
         pl: "1rem",
+        mb: "2rem",
+        ml: "1rem"
       }}
     >
       <Paper
@@ -50,12 +52,6 @@ function FiltersMain() {
         <FiltersReset />
         <FiltersInstuction />
         <FilterLink />
-        {/* 
-        
-        <SortByFilter />
-        <YearsFilter />
-        <GenreFilter />
-        <PaginationPanel /> */}
       </Paper>
     </Box>
   );
