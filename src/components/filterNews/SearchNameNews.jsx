@@ -14,10 +14,10 @@ function SearchNameNews() {
   }
   return (
     <Input
-            sx={{width: '250px', mb: 1 }}
-            placeholder="Поиск по названию"  
-            onChange={handleChangeName}
-            value={inputName}
+      sx={{width: '250px', mb: 1 }}
+      placeholder="Поиск по названию"  
+      onChange={handleChangeName}
+      value={inputName}
     />
   );
 }

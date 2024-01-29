@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EmailIcon from '@mui/icons-material/Email';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import { logout } from '../../store/reducers/auth';
 
 import { IconButton, Button, Box } from "@mui/material";
 
@@ -15,8 +16,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
 function HeaderMain() { //function Header({head, isLogin, setIsLogin})
-  const isLogin = false; 
+  const isLogin = Boolean(useSelector(state => state.auth.data)); 
+  const dispatсh = useDispatch();
 
+  const onClickLogout = () => {
+    dispatсh(logout());
+    window.localStorage.removeItem('token'); //удаляем токен из памяти браузера
+  }
   // клик на кнопку logout либо сотрет токен из куков
   // function handleLogin() {
   //   if(isLogin){ 
@@ -65,6 +71,7 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
               paddingRight: "10rem",
             }}
             >
+              {/* иконки не из MUI */}
               {/* <IconButton aria-label="add" className="icon">
                 <a href="mailto:cpc@education70.ru">
                   <img src="/logo/letter.png" alt="Ваше изображение" style={{ height: '40px'}}/>
@@ -106,7 +113,14 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
             </IconButton>
 
             <IconButton aria-label="add" className="icon">
-              {isLogin ? <LogoutIcon style={{ color: 'grey' }}/> :<Link to={"/login"}> <LoginIcon style={{ color: 'grey' }}/> </Link>}
+              {isLogin ? 
+                
+                <LogoutIcon style={{ color: 'grey' }} onClick={() => onClickLogout()}/>
+                 : 
+                <Link to={"/login"}> 
+                  <LoginIcon style={{ color: 'grey' }}/> 
+                </Link>
+              }
             </IconButton>
           </div>
         </div>

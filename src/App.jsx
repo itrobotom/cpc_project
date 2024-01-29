@@ -12,8 +12,17 @@ import { DetailsProgramPage } from "./pages/detailsProgramPage/DetailsProgramPag
 import { MainPage } from "./pages/mainPage/MainPage";
 import { Login } from "./pages/login/Login";
 import { NewsPage } from "./pages/newsPage/NewsPage";
+import { useDispatch, useSelector } from 'react-redux'; 
+import { useEffect } from "react";
+import { fetchLogin } from "./store/reducers/auth";
 
 function App() {
+	const dispatch = useDispatch();
+	const isAuth = Boolean(useSelector(state => state.auth.data)); //проверим, выполнена ли авторизация (если да, в стейте будут данные)
+	console.log('Проверка авторизации при первом запуске приложения', isAuth);
+	useEffect(() => {
+		dispatch(fetchLogin()); 
+	}, [])
 	const router = createBrowserRouter([
 		{
 			path: "/",

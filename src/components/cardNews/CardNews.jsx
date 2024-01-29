@@ -14,7 +14,7 @@ export const CardNews = ({
   children,
   isFullPost,
   isLoading,
-  isEditable,
+  isEditable, //если true - значит авторизован и есть возможность редактировать статью 
   textNews
 }) => {
   // if (isLoading) {
@@ -22,7 +22,7 @@ export const CardNews = ({
   // }
 
   const onClickRemove = () => {};
-
+  console.log('Т.к. авторизация пройдена, можно редактировать статью', isEditable);
   return (
     <div>
       {isEditable && (

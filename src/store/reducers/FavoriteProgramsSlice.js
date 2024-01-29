@@ -8,7 +8,7 @@ function getInitialFavoritePrograms() {
             arrIdFavoritePrograms.push(program.id);
         }
     });
-    console.log('Массив id избранных фильмов: ', arrIdFavoritePrograms);
+    console.log('Массив id избранных программ: ', arrIdFavoritePrograms);
     return arrIdFavoritePrograms;
 }
 

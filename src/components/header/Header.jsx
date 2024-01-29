@@ -4,6 +4,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
+import { logout } from '../../store/reducers/auth';
 import { IconButton, Button, Box } from "@mui/material";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,18 +16,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
 function Header() { //function Header({head, isLogin, setIsLogin})
-  const isLogin = false; 
+  const isLogin = Boolean(useSelector(state => state.auth.data)); 
+  const dispatсh = useDispatch();
 
-  // клик на кнопку logout либо сотрет токен из куков
-  // function handleLogin() {
-  //   if(isLogin){ 
-  //     console.log('Удаляем токен!');
-  //     deleteTokenCookies(); //удаляем токен из куков
-  //     dispatch(deleteToken());
-  //     setIsLogin(!isLogin); //устанавливаем флаг как не авторизоавнный и сразу пройдет перерендер, отображаться теперь контент сайта не будет
-  //   }
-  //   console.log('После удаления токена вот такой флаг авторизации: ', isLogin); 
-  // }
+  const onClickLogout = () => {
+    dispatсh(logout());
+    window.localStorage.removeItem('token'); //удаляем токен из памяти браузера
+  }
 
   return (
     <div className="header-container">
@@ -62,20 +62,22 @@ function Header() { //function Header({head, isLogin, setIsLogin})
               paddingRight: "10rem",
             }}
             >
-              <IconButton aria-label="add" className="icon">
+              <IconButton aria-label="email">
                 <a href="mailto:cpc@education70.ru">
-                  <img src="/logo/letter.png" alt="Ваше изображение" style={{ height: '40px'}}/>
-                </a>  
+                  <EmailIcon  style={{ color: 'grey' }}/>
+                </a>
               </IconButton>
-              <IconButton aria-label="add" className="icon">
-                <a href="https://vk.com/cpc.tomsk">
-                  <img src="/logo/vk.png" alt="Ваше изображение" style={{ height: '40px'}}/>
-                </a>  
+
+              <IconButton aria-label="facebook">
+                <a href="https://vk.com/cpc.tomsk" target="_blank">
+                  <FacebookIcon style={{ color: 'grey' }}/>
+                </a>
               </IconButton>
-              <IconButton aria-label="add" className="icon">
-                <a href="https://youtu.be/y5L7gmQhcWI?si=Zw2ONelvaiOgqn0D">
-                  <img src="/logo/youtube.png" alt="Ваше изображение" style={{ height: '40px'}}/>
-                </a>  
+
+              <IconButton aria-label="youtube">
+                <a href="https://youtu.be/y5L7gmQhcWI?si=Zw2ONelvaiOgqn0D" target="_blank">
+                  <YouTubeIcon style={{ color: 'grey' }}/>
+                </a>
               </IconButton>
             </Box>
             <IconButton aria-label="add" className="icon">
@@ -86,7 +88,14 @@ function Header() { //function Header({head, isLogin, setIsLogin})
             </IconButton>
 
             <IconButton aria-label="add" className="icon">
-              {isLogin ? <LogoutIcon /> :<Link to={"/login"}> <LoginIcon /> </Link>}
+              {isLogin ? 
+                
+                <LogoutIcon style={{ color: 'grey' }} onClick={() => onClickLogout()}/>
+                 : 
+                <Link to={"/login"}> 
+                  <LoginIcon style={{ color: 'grey' }}/> 
+                </Link>
+              }
             </IconButton>
           </div>
         </div>
