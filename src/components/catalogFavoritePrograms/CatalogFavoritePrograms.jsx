@@ -41,7 +41,7 @@ const CatalogFavoritePrograms = () => {
                 flexWrap: "wrap",
                 justifyContent: "start",
                 alignContent: "flex-start",
-                pl: "23.5rem",
+                pl: "26.5rem",
                 "@media(max-width: 50rem)": {
                 p: "0rem",
                 },

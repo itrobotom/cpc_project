@@ -1,13 +1,15 @@
 import React from 'react';
 import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
-
+import { useDispatch, useSelector } from 'react-redux'; 
+import { fetchRemoveNews } from '../../store/reducers/news';
 import { Box, Typography, IconButton, CardMedia, Link } from "@mui/material";
 
 import styles from './CardNews.css';
+import Markdown from 'react-markdown'
 
 export const CardNews = ({
-  _id,
+  id,
   title,
   createdAt,
   imageUrl,
@@ -20,17 +22,20 @@ export const CardNews = ({
   // if (isLoading) {
   //   return <PostSkeleton />;
   // }
+  const dispatch = useDispatch();
+  const onClickRemove = () => {
+    dispatch(fetchRemoveNews(id))
+  };
 
-  const onClickRemove = () => {};
   console.log('Т.к. авторизация пройдена, можно редактировать статью', isEditable);
   return (
     <div>
       {isEditable && (
         <div>
-          <a href={`/posts/${_id}/edit`}>
+          <a href={`/news/${id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
-            </IconButton>
+            </IconButton>  
           </a>
           <IconButton onClick={onClickRemove} color="secondary">
             <DeleteIcon />
@@ -46,7 +51,9 @@ export const CardNews = ({
           // className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
         />
       )}
-      <Typography style={{ fontSize: '20px', width: '100%', textAlign: 'justify' }}>{textNews}</Typography>
+      <Typography style={{ fontSize: '20px', width: '100%', textAlign: 'justify' }}>
+        <Markdown>{textNews}</Markdown>
+      </Typography>
       <Typography>{createdAt}</Typography>
     </div>
   );

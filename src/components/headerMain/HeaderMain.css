@@ -71,7 +71,8 @@
     border: none;
     cursor: pointer;
     font-size: larger;
-    color: #008a3a;
+    /* color: #008a3a; */
+    color: #727272;
     text-decoration: none;
     position: relative;
     transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -85,14 +86,20 @@
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #008a3a;
+    /* background-color: #008a3a; */
+    /* background-color: #4FD1C5; или rgb(79,209,197) бирюза*/
+    background-color: rgb(53, 47, 47); 
+    /* background-color: #a7bed8; синий крафт */
+    
     transform: scaleY(0);
     transform-origin: bottom;
     transition: transform 0.3s ease-in-out;
 }
 
 .button-home:hover {
-    color: #005a1e;
+    /* color: #005a1e; */
+    /* color: rgb(79,209,197); бирюза */
+    color: rgb(53, 47, 47); 
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 

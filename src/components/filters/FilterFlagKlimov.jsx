@@ -24,7 +24,10 @@ function FilterFlagKlimov() {
     return(
         <Box sx={{ mt: 1 }}>
             <FormControlLabel 
-                control={<Checkbox defaultChecked color="success"/>} 
+                control={<Checkbox 
+                    defaultChecked 
+                    // color="success"
+                />} 
                 label="Прошел тест по профоориентации (с 11 лет)" 
                 checked={isCheckBoxAction ? true : false}
                 onChange={handleFilterKlimov}

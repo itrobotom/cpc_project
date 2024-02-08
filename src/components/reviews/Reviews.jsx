@@ -31,7 +31,7 @@ const Reviews = () => {
         Отзывы
       </Typography>
       <Typography variant="h5" align="center" gutterBottom style={{ marginBottom: '30px' }}>
-        больше отзывов в группе ВК: https://vk.com/cpc.tomsk
+        Ждем обратную связь от родителей и учеников у нас в <a href="https://vk.com/cpc.tomsk" target="_blank">официальной группе Вконтакте</a>
       </Typography>
       
       <Grid container spacing={3} xs={11} md={9} style={{ padding: '20px' }}>

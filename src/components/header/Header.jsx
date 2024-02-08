@@ -35,8 +35,11 @@ function Header() { //function Header({head, isLogin, setIsLogin})
       >
         <div className="header">
           <div className="center-logo">
-            <IconButton aria-label="add" className="icon">
+            {/* <IconButton aria-label="add" className="icon">
               <img src="/logo/cpc.png" alt="Ваше изображение" style={{ height: '80px'}}/>
+            </IconButton> */}
+            <IconButton aria-label="add" className="icon">
+              <img src="/logo/logonew2.png" alt="Ваше изображение" style={{ height: '80px'}}/>
             </IconButton>
           </div>
           <div className="left-buttons">
@@ -81,10 +84,14 @@ function Header() { //function Header({head, isLogin, setIsLogin})
               </IconButton>
             </Box>
             <IconButton aria-label="add" className="icon">
-              {isLogin && <NewspaperIcon />}
+              {isLogin && 
+              <Link to={"/addnews"}> 
+                <NewspaperIcon style={{ color: 'grey' }}/>
+              </Link>
+              }
             </IconButton>
             <IconButton aria-label="add" className="icon">
-              {isLogin && <AddCircleOutlineIcon />}
+              {isLogin && <AddCircleOutlineIcon style={{ color: 'grey' }}/>}
             </IconButton>
 
             <IconButton aria-label="add" className="icon">

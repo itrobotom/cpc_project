@@ -20,7 +20,7 @@ function FiltersInstuction() {
             display: "flex",
             justifyContent: "start",
             alignItems: "center",
-            mt: 3,
+            mt: 2,
           }}
         >
           <Button

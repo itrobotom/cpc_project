@@ -24,10 +24,18 @@ function FilterTypePay() {
 
   return (
     <FormControl sx={{ marginTop: 4 }} >
-      <InputLabel htmlFor="filterTypePay" variant="outlined" color='success'>
+      <InputLabel 
+        htmlFor="filterTypePay" 
+        variant="outlined" 
+        // color='success'
+      >
         Финансирование:
       </InputLabel>
-      <Select value={selectedOption} onChange={handleChange} label="_______________" color='success'>
+      <Select value={selectedOption} 
+        onChange={handleChange} 
+        label="_______________" 
+        // color='success'
+      >
         <MenuItem value={"allPayType"}>Бюджетные и платные</MenuItem>
         <MenuItem value={"noPayType"}>Бюджетные</MenuItem>
         <MenuItem value={"payType"}>Платные</MenuItem>

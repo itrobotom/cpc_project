@@ -8,14 +8,17 @@ import Partners from '../../components/partners/Partners.jsx';
 import Footer from '../../components/footer/Footer.jsx';
 import { positions } from '@mui/system';
 
-import "./MainPage.css"
 import Slider from 'react-slick';
+
+import "./MainPage.css"
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const imagePaths = [
   "media/main/main2.jpg",
   "media/main/main3.jpg",
+  "media/main/main16.jpg",
+  "media/main/main15.jpg",
   "media/main/main44.jpg",
   "media/main/main55.jpg",
   "media/main/main1.jpg",
@@ -33,6 +36,15 @@ const images = [
   'media/galery/4.jpg',
   'media/galery/5.jpg',
   'media/galery/6.jpg',
+  'media/galery/7.jpg',
+  'media/galery/8.jpg',
+  'media/galery/9.jpg',
+  'media/galery/10.jpg',
+  'media/galery/11.jpg',
+  'media/galery/12.jpg',
+  'media/galery/14.jpg',
+  'media/galery/15.jpg',
+  'media/galery/16.jpg',
 ];
 
 const settings = {
@@ -146,7 +158,17 @@ export function MainPage() {
       </Grid> */}
 
       {/* о деятельности тестом и видео рядом*/}
-      <Grid container spacing={2} style={{ backgroundColor: '#4FD1C5', padding: '20px', minHeight: '70vh', paddingTop: '0px' }} alignItems="center" justifyContent="center">
+      {/* синий крафт 
+      background-color: #a7bed8; 159, 187, 212
+      бирюза */}
+      {/* синий нейтральный с лого
+      #58a0dc, 88, 163, 220
+      синиий с лого контрастный
+      #3b75ec , 59, 117, 236*/}
+
+      {/* backgroundColor: '#4FD1C5' */}
+      
+      <Grid container spacing={2} style={{ backgroundColor: '#58a0dc', padding: '20px', minHeight: '70vh', paddingTop: '0px' }} alignItems="center" justifyContent="center">
         <Grid item xs={12} md={6} alignSelf="center">
           {/* <Typography variant="h2" align="center" gutterBottom>
             Миссия центра
@@ -196,7 +218,7 @@ export function MainPage() {
             Новости!
           </Typography>
           <Typography fontSize={"28px"} align="center">
-            Успехи наших учеников — важное событие для нас. Выдающиеся достижения публикуются в разделе История успеха (гиперссылка). Посмотреть как проходят занятия у нас в центре, как проходят выступления ребят. Можно в социальных сетях объединений а также в общей официальной группе https://vk.com/cpc.tomsk
+            Успехи наших учеников — важное событие для нас. Выдающиеся достижения публикуются в разделе <a href="http://localhost:3000/news">История успеха</a>. Посмотреть как проходят занятия у нас в центре, результаты мероприямтий можно в социальных сетях объединений, а также в <a href="https://vk.com/cpc.tomsk" target="_blank">официальной группе Вконтакте</a>
           </Typography>
         </Grid>
       </Grid>

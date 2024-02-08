@@ -18,10 +18,9 @@ export function NewsPage() {
   const dispatch = useDispatch();
   const { news } = useSelector((state) => state.news);
   const { data } = useSelector((state) => state.auth); //данные пользователя
-  console.log('&&&&&&&&', news);
-  console.log('!!!!!!!!', data);
   const isLoadingNews = news.status === 'loading';
 
+  console.log('Полученные новости ', news); 
   useEffect(() => {
     dispatch(fetchNews()); 
   }, []); 
@@ -82,11 +81,13 @@ export function NewsPage() {
                 </Box>
               ) : (
                 <>
-                  {news.items.map((obj, index) => (
+                  {news.items.map((obj, index) => 
+                  // console.log("Url очередной статьи ", `http://localhost:5000${imageUrl}`)
+                  (
                     <CardNews
                       id={obj._id}
                       title={obj.title}
-                      imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+                      imageUrl={obj.imageUrl ? `http://localhost:5000${obj.imageUrl}` : ''}
                       createdAt={'12 июня 2022 г.'}
                       isEditable={data} //если тут не undifined или null, значит будет true и авторизация пройдена
                       textNews={obj.text}

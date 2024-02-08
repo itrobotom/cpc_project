@@ -14,7 +14,7 @@ function SearchNameProgram() {
   }
   return (
     <Input
-            sx={{width: '250px', mb: 1 }}
+            sx={{width: '250px', mb: 0 }}
             placeholder="Поиск по названию"  
             onChange={handleChangeName}
             value={inputName}

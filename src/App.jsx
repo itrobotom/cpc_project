@@ -15,10 +15,11 @@ import { NewsPage } from "./pages/newsPage/NewsPage";
 import { useDispatch, useSelector } from 'react-redux'; 
 import { useEffect } from "react";
 import { fetchLogin } from "./store/reducers/auth";
+import { AddNewsPage } from "./pages/addNewsPage/AddNewsPage";
 
 function App() {
 	const dispatch = useDispatch();
-	const isAuth = Boolean(useSelector(state => state.auth.data)); //проверим, выполнена ли авторизация (если да, в стейте будут данные)
+	const isAuth = Boolean(useSelector(state => state.auth.userData)); //проверим, выполнена ли авторизация (если да, в стейте будут данные)
 	console.log('Проверка авторизации при первом запуске приложения', isAuth);
 	useEffect(() => {
 		dispatch(fetchLogin()); 
@@ -44,6 +45,15 @@ function App() {
 		{
 			path: "/news",
 			element: <NewsPage />,
+		},
+		{
+			path: "/addnews",
+			element: <AddNewsPage />,
+		},
+		{
+			path: "/news/:id/edit",
+			//при клике редактирования мы передадим id и перейдем на урл edit и откроется то же окно как при создании
+			element: <AddNewsPage />, 
 		}
     // programm_id обычно получают из loader с помощью которого делают асинхронный запрос на сервер
 	]);

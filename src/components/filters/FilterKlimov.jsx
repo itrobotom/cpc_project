@@ -23,7 +23,7 @@ const selectTypeKlimovProgramDefault = ["Человек-природа",
 const GreenAutocomplete = styled(Autocomplete)({
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
-      borderColor: 'green', // измените цвет фокуса на зеленый
+      // borderColor: 'green', // измените цвет фокуса на зеленый
       },
     },
 });     
@@ -66,7 +66,7 @@ function FilterKlimov() {
         multiple
         limitTags={LIMIT_TAGS}
         options={selectTypeKlimovProgramDefault}
-        color="success"
+        // color="success"
         value={selectTypeKlimovProgram} // то что выбирается согласно стейту
         getOptionLabel={(option) => option}
         onChange={handleTypeProgram}
@@ -77,12 +77,16 @@ function FilterKlimov() {
               checkedIcon={CHECKED_ICON}
               style={{ marginRight: 8 }}
               checked={selected}
-              color="success"
+              // color="success"
             />
             {option}
           </li>
         )}
-        renderInput={(params) => <TextField {...params} color="success" label="Направления по Климову" />}
+        renderInput={(params) => 
+          <TextField {...params} 
+            // color="success" 
+            label="Направления по Климову" 
+          />}
         renderTags={(value, getTagProps) => {
           const numTags = value.length;
           const limitTags = LIMIT_TAGS;

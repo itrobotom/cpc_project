@@ -24,7 +24,7 @@ const selectTypeProgramDefault = ["технические направления
 const GreenAutocomplete = styled(Autocomplete)({
     '& .MuiOutlinedInput-root': {
         '&.Mui-focused fieldset': {
-        borderColor: 'green', // измените цвет фокуса на зеленый
+        // borderColor: 'green', // измените цвет фокуса на зеленый
         },
     },
 });                
@@ -67,7 +67,7 @@ function FilterTypeProgramm() {
       multiple
       limitTags={LIMIT_TAGS}
       options={selectTypeProgramDefault}
-      color="success"
+      // color="success"
       value={selectTypeProgram} // то что выбирается согласно стейту
       getOptionLabel={(option) => option}
       onChange={handleTypeProgram}
@@ -78,12 +78,15 @@ function FilterTypeProgramm() {
             checkedIcon={CHECKED_ICON}
             style={{ marginRight: 8 }}
             checked={selected}
-            color="success"
+            // color="success"
           />
           {option}
         </li>
       )}
-      renderInput={(params) => <TextField {...params} color="success" label="Направления" />}
+      renderInput={(params) => <TextField {...params} 
+      // color="success" 
+      label="Направления" 
+      />}
       renderTags={(value, getTagProps) => {
         const numTags = value.length;
         const limitTags = LIMIT_TAGS;

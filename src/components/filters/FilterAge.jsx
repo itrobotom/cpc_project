@@ -51,8 +51,28 @@ function FilterAge() {
           marks={marks}
           // step={2}
           // size="small"
-          color="success"
+          // color="success"
         />
+        {/* изменение цвета из палитры */}
+        {/* <Slider
+          value={valueYears}
+          valueLabelDisplay="auto"
+          max={18}
+          min={6}
+          onChange={handleChangeYears}
+          marks={marks}
+          sx={{
+            color: 'rgb(79,209,197)', // Задаем бирюзовый цвет
+            '& .MuiSlider-track': { // Дополнительный стиль для трека слайдера
+              backgroundColor: 'rgb(79,209,197)', // Задаем цвет для трека слайдера
+            },
+            '& .MuiSlider-thumb': { // Дополнительный стиль для бегунка слайдера
+              '&:hover, &.Mui-focusVisible': {
+                boxShadow: '0px 0px 0px 8px rgba(79,209,197, 0.16)', // Задаем тень при наведении или фокусе на бегунке слайдера
+              },
+            },
+          }}
+        /> */}
       </Box>
     </Box>
   );

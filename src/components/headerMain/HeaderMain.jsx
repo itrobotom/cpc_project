@@ -106,10 +106,14 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
               </IconButton>
             </Box>
             <IconButton aria-label="add" className="icon">
-              {isLogin && <NewspaperIcon />}
+            {isLogin && 
+              <Link to={"/addnews"}> 
+                <NewspaperIcon style={{ color: 'grey' }}/>
+              </Link>
+              }
             </IconButton>
             <IconButton aria-label="add" className="icon">
-              {isLogin && <AddCircleOutlineIcon />}
+              {isLogin && <AddCircleOutlineIcon style={{ color: 'grey' }}/>}
             </IconButton>
 
             <IconButton aria-label="add" className="icon">

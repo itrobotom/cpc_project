@@ -38,7 +38,7 @@ function FiltersMain() {
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          p: "1rem 1rem 3rem 1rem",
+          p: "0.5rem 1rem 3rem 1rem",
         }}
       >
         <Typography variant="h6" sx={{mb: 2}}>Поиск по фильтрам</Typography>

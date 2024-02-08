@@ -6,11 +6,15 @@
     text-transform: uppercase;
     letter-spacing: 1.3px;
     font-weight: 700;
+    /* цвет текста в кнопке */
     color: #313133;
-    background: #4FD1C5;
+    /* background: #4FD1C5; */
+    /* градиент то есть смена цвета слева направо вся кнопка залита цветом со смешиванием*/
+    /* background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%); */
     background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
     border: none;
     border-radius: 1000px;
+    /* ореол вокруг кнопки */
     box-shadow: 12px 12px 24px rgba(79,209,197,.64);
     transition: all 0.3s ease-in-out 0s;
     cursor: pointer;
@@ -34,6 +38,7 @@
 }
   
 .custom-button:hover, .custom-button:focus {
+    /* цвет текста в кнопке после наведения на кнопку */
     color: #313133;
     transform: translateY(-6px);
     transform: translate(0%, 0%) scale(1.1);
@@ -47,6 +52,8 @@
     content: '';
     width: 30px; height: 30px;
     border-radius: 100%;
+    /* обводка у кнопки расплывающаяся */
+    /* border: 6px solid #00FFCB; */
     border: 6px solid #00FFCB;
     position: absolute;
     z-index: -1;
