@@ -5,7 +5,7 @@ import { FilterYear } from "./FilterYear";
 import { FilterTypeNews } from "./FilterTypeNews";
 import { useDispatch, useSelector } from "react-redux"; 
 // import { resetFilter } from "../../store/reducers/FilterPanelSlice"
-import NewsPagination from "../../components/filterNews/newsPagination/NewsPagination"
+// import NewsPagination from "../../components/filterNews/newsPagination/NewsPagination"
 import React, { useEffect, useState } from 'react';
 
 function FilterMainNews({ setPage }) {
@@ -40,7 +40,7 @@ function FilterMainNews({ setPage }) {
         <FilterYear />
         <FilterTypeNews />
         <FiltersReset />
-        <NewsPagination setPage={setPage} />
+        {/* <NewsPagination setPage={setPage} /> */}
       </Paper>
     </Box>
   );

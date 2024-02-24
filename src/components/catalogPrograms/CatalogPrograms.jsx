@@ -115,20 +115,36 @@ const CatalogPrograms = () => {
             {catalogProgramList}
         </Box>
     ) : (
-        <Box>
+        <Box
+        sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "start",
+            alignContent: "flex-start",
+            // расстояние между карточками
+            // gap: "0rem", 
+            // расстояние для пространства блока с фильтрами
+            pl: "26.5rem",
+            "@media(max-width: 50rem)": {
+                p: "0rem",
+                ml: "2rem"
+            },
+        }}
+        >
             <Typography
                 sx={{
-                    m: "0rem 0rem 1rem 26.5rem",
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100vh', // Задайте высоту вьюпорта
+                    width: '100%',
                     color: "grey",
                     fontSize: "1.15rem",
-                    "@media(max-width: 50rem)": {
-                        ml: "0rem",
-                    },
                 }}
             >
-                <i>Программы по заданным параметрам поиска отсутсвуют</i>
+                Программы по заданным параметрам поиска отсутсвуют
             </Typography>
-        </Box>
+        </Box>   
         )
     )
 }

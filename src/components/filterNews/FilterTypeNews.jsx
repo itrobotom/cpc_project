@@ -34,8 +34,8 @@ function FilterTypeNews() {
   //иначе сначала чистим стор полностью, а затем добавляем выбранные жанры 
   const dispatch = useDispatch();
 
-  const selectType = useSelector(state => state.valueFilters.type); 
-  console.log("Выбрали новые типы новостей: ", selectType);
+  const selectType = useSelector(state => state.valueFiltersNews.type); 
+  //console.log("Выбрали новые типы новостей смотрим стейт из Redux: ", selectType);
 
   const [selectTypeNews, setSelectTypeNews] = useState([]);
 
@@ -46,7 +46,7 @@ function FilterTypeNews() {
   }, [selectType]);
 
   useEffect(() => { //вызываем перерендер как только сменится стейт с типами программ 
-    console.log("Выбрана в типе программа: ", selectTypeNews);
+    console.log("Выбрана в типе новость: ", selectTypeNews);
   }, [selectTypeNews]);
   
   useEffect(() => {
