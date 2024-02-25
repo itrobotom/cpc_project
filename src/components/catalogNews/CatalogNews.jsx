@@ -42,7 +42,7 @@ export function CatalogNews({page, setPage}) {
     //выбираем новости по фильтрам, когда мы их загрузили на клиент в браузер
     if(!isLoadingNews){
         console.log('Объект всех новостей!!!: ', news);
-        console.log('Номер страницы из паганиции, который кликнули ', page);
+        //console.log('Номер страницы из паганиции, который кликнули ', page);
 
         catalogNewsListFilter = news.items.filter((element) => {
             let includedInRange = false; 
@@ -52,9 +52,7 @@ export function CatalogNews({page, setPage}) {
                 // Преобразуем строку в число, чтобы проверить границы
                 const yearNumber = parseInt(yearString);
                 includedInRange = ((yearNumber >= yearInterval.min) && (yearNumber <= yearInterval.max));
-            } else { //если дату при создании новости не внесли, то мы не будем отображать новость при сортировке по годам
-                includedInRange = false; 
-            }
+            } 
 
             //добавим фильтр по отбору по заголовку новости
             const includedSearchName =  element.title.toLowerCase().includes(inputName);

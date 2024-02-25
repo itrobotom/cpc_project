@@ -16,10 +16,6 @@ const initialState = {
         items: [],
         status: 'loading',
     },
-    // tags: {
-    //     items: [],
-    //     status: 'loading',
-    // },
 }
 
 const newsSlice = createSlice({
