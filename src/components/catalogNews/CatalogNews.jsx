@@ -16,7 +16,6 @@ export function CatalogNews({page, setPage}) {
     const yearInterval = useSelector(state => state.valueFiltersNews.yearRange); 
     const inputName = useSelector(state => state.valueFiltersNews.nameNews);
 
-
     //пагинация
     const PAGE_NUM_DEFAULT = 1; 
     const PAGE_COUNT_DEFAULT = 1; 
