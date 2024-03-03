@@ -25,7 +25,7 @@ export function NewsPage() {
             }}
         > 
             <FilterMainNews/>
-            <CatalogNews setPage={setPage} page={page}/>
+            <CatalogNews />
             
         </Box>
         <Footer/>

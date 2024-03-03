@@ -1,6 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import axiosBase from '../../axios';
-import { Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
+import "./ImageUploader.css"
+
+const SIZE_IMAGE_LIMIT = 1024 * 1024 * 1; //1 Мб
+const WIDTH_IMAGE_CONVERT = 1980;
 
 const generateRandomString = (length) => {
     let result = '';
@@ -12,8 +16,25 @@ const generateRandomString = (length) => {
     return result;
 };
 
-const ImageUploader = ({ setImageUrl }) => {
+
+
+const ImageUploader = ({ url, folder,  imageUrl, setImageUrl}) => {
     const inputFileRef = useRef(null);
+
+    // const onClickRemoveImage = () => {
+    //     setImageUrl(''); //удаляем url изображения
+    // };
+    const handleRemoveFile = async () => {
+        try {
+            console.log('Путь для удаления фото ', imageUrl);
+            await axiosBase.delete(imageUrl);
+            console.log('Фото успешно удалено');
+            setImageUrl(null);
+        } catch (err) {
+            console.error('Ошибка при удалении фото: ', err);
+            alert('Произошла ошибка при удалении фото');
+        }
+    };
 
     // Функция для обработки загрузки изображения
     const handleChangeImg = async (event) => {
@@ -23,14 +44,14 @@ const ImageUploader = ({ setImageUrl }) => {
             const fileName = `${generateRandomString(8)}.${img.name.split('.').pop()}`;
 
             // Проверяем размер файла
-            if (img.size > 1024 * 1024) { // Если размер файла больше 1 МБ
+            if (img.size > SIZE_IMAGE_LIMIT) { // Если размер файла больше 1 МБ
                 // Создаем объект Image для работы с изображением
                 const image = new Image();
                 image.src = URL.createObjectURL(img);
                 image.onload = () => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    canvas.width = 1980;
+                    canvas.width = WIDTH_IMAGE_CONVERT;
                     canvas.height = (image.height / image.width) * canvas.width;
                     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
@@ -41,8 +62,10 @@ const ImageUploader = ({ setImageUrl }) => {
                     fetch(resizedImageData)
                         .then(res => res.blob())
                         .then(blob => {
-                            formData.append('image', blob, fileName);
-                            axiosBase.post('/upload', formData)
+                            // formData.append('image', blob, `newsImage/${fileName}`);
+                            // axiosBase.post('/uploads_news_image', formData)
+                            formData.append('image', blob, `${folder}/${fileName}`);
+                            axiosBase.post(`/${url}`, formData)
                                 .then(response => {
                                     console.log('Ссылка на загруженное на сервер изображение: ', response.data.url);
                                     setImageUrl(response.data.url);
@@ -59,10 +82,11 @@ const ImageUploader = ({ setImageUrl }) => {
                 };
             } else {
                 // Файл небольшого размера, загружаем его без изменений
-                formData.append('image', img, fileName);
-                axiosBase.post('/upload', formData)
+                formData.append('image', img, `${folder}/${fileName}`);
+                axiosBase.post(`/${url}`, formData)
                     .then(response => {
                         console.log('Ссылка на загруженное на сервер изображение: ', response.data.url);
+                        console.log("ссылка и папка ", {url, folder})
                         setImageUrl(response.data.url);
                     })
                     .catch(error => {
@@ -78,25 +102,42 @@ const ImageUploader = ({ setImageUrl }) => {
 
     return (
         <>
-            <Button 
-                onClick={() => inputFileRef.current.click()}
-                variant="outlined" 
-                size="large"
-            >
-                Загрузить изображение
-            </Button>
-            <input 
-                ref={inputFileRef}
-                type="file" 
-                onChange={handleChangeImg} 
-                hidden 
-            />
+        {imageUrl ? (
+             <>
+                <Box m={2}>
+                    <Button variant="contained" color="error" onClick={handleRemoveFile}>
+                        Удалить
+                    </Button>
+                </Box>
+                <Box mt={2}>
+                    <img className="image-width" src={`http://localhost:5000${imageUrl}`} alt="Uploaded" />
+                </Box>
+                
+            </>
+            ) : (
+                <> 
+                    <Box m={2}>
+                        <Button 
+                            onClick={() => inputFileRef.current.click()}
+                            variant="outlined" 
+                            size="large"
+                            sx={{mr: "20px"}}
+                        >
+                            Загрузить изображение
+                        </Button>
+                        <input 
+                            ref={inputFileRef}
+                            type="file" 
+                            onChange={handleChangeImg} 
+                            hidden 
+                        /> 
+                    </Box>
+                </>
+            )}
         </>
     );
 };
 
-
-  
 export default ImageUploader;
 
 

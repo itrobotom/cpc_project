@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { fetchLogin } from "./store/reducers/auth";
 import { AddNewsPage } from "./pages/addNewsPage/AddNewsPage";
+import { AddProgramPage } from "./pages/addProgramPage/AddProgramPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -49,6 +50,10 @@ function App() {
 		{
 			path: "/addnews",
 			element: <AddNewsPage />,
+		},
+		{
+			path: "/addprogram",
+			element: <AddProgramPage />,
 		},
 		{
 			path: "/news/:id/edit",

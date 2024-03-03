@@ -1,7 +1,8 @@
 import { Box, Grid, Typography, IconButton } from "@mui/material";
 import EmailIcon from '@mui/icons-material/Email';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
   return (
@@ -22,17 +23,23 @@ function Footer() {
       <Grid container spacing={2} justifyContent="center" mt={4}>
         <Grid item>
           <IconButton aria-label="email">
-            <EmailIcon />
+            <a href="mailto:cpc@education70.ru" target="_blank">
+              <EmailIcon  style={{ color: 'grey', verticalAlign: 'middle' }}/>
+            </a>
           </IconButton>
         </Grid>
         <Grid item>
-          <IconButton aria-label="facebook">
-            <FacebookIcon />
+          <IconButton aria-label="vk">
+            <a href="https://vk.com/cpc.tomsk" target="_blank">
+              <FontAwesomeIcon icon={faVk} style={{ color: "#808080", fontSize: "20px", verticalAlign: 'middle' }} />
+            </a>
           </IconButton>
         </Grid>
         <Grid item>
           <IconButton aria-label="youtube">
-            <YouTubeIcon />
+            <a href="https://youtu.be/y5L7gmQhcWI?si=Zw2ONelvaiOgqn0D" target="_blank">
+              <YouTubeIcon style={{ color: 'grey', verticalAlign: 'middle' }}/>
+            </a>
           </IconButton>
         </Grid>
       </Grid>

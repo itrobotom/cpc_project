@@ -1,20 +1,28 @@
 import { useState, useCallback } from 'react';
 import dayjs from 'dayjs';
 export const useNewsForm = () => {
-    const [posterUrl, setPosterUrl] = useState(''); 
-    const [textProgram, setTextProgram] = useState('');
-    const [titleProgram, setTitleProgram] = useState(''); //название новости
-    const [shortTitleProgram, setShortTitleProgram] = useState(''); 
-    const [ageRangeProgram, setAgeRangeProgram] = useState({});
+    
+    const [titleProgram, setTitleProgram] = useState(''); //название образовательной программы
+    const [shortTitleProgram, setShortTitleProgram] = useState(''); //укороченное называние образовательной программы
+    const [ageRangeProgram, setAgeRangeProgram] = useState([]); //диапазон возраста (будет минимум и максимум число)
+    const [isBudgetProgramm, setIsBudgetProgramm] = useState(true); //бюджетная или платная улслуга (флаг)
+    const [numberStudents, setNumberStudents] = useState([]); //количество учеников в группе (будет минимум и максимум число)
+    const [linkVideo, setLinkVideo] = useState(''); //ссылка на видео
+    const [linkGroup, setLinkGroup] = useState(''); //ссылка на группу в соцсетях
+
     const [dataInstructor, setDataInstructor] = useState([]); //массив учителей (фио, почта, id сферума, ссылка на личную страничку)
-    const [isBudgetProgramm, setIsBudgetProgramm] = useState(true);
-    const [numberStudents, setNumberStudents] = useState({});
-    const [typeProgramm, setTypeProgram] = useState([]);
-    const [typeProgramKlimov, setTypeProgramKlimov] = useState([]);
-    const [linkVideo, setLinkVideo] = useState('');
-    const [linkGroup, setLinkGroup] = useState('');
+    
+    const [posterUrl, setPosterUrl] = useState(''); //ссылка на постер (прийдет от сервера, когда загрузится на сервер)  
+
+    const [textProgram, setTextProgram] = useState(''); //текст программы
+
+    //готово
+    const [typesProgramm, setTypesProgram] = useState([]); //тип программы классический (экология, программирование, бизнес)
+    const [typesProgramKlimov, setTypesProgramKlimov] = useState([]); //тип программы по климову
+    
     
     //добавить загрузку pdf файла 
+    
     const [linkProgramm, setLinkProgramm] = useState('');
     //работа с вводом названия программы и ссылки на нее
     const [programName, setProgramName] = useState('');

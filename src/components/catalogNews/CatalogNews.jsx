@@ -7,7 +7,7 @@ import { CardNews } from "../../components/cardNews/CardNews.jsx"
 import NewsPagination from '../filterNews/newsPagination/NewsPagination.jsx';
 import dayjs from 'dayjs';
 
-export function CatalogNews({page, setPage}) {
+export function CatalogNews() {
     const dispatch = useDispatch();
     const { news } = useSelector((state) => state.news); //все новости объектом
     const isLoadingNews = news.status === 'loading';
@@ -40,9 +40,8 @@ export function CatalogNews({page, setPage}) {
 
     //выбираем новости по фильтрам, когда мы их загрузили на клиент в браузер
     if(!isLoadingNews){
-        console.log('Объект всех новостей!!!: ', news);
+        //console.log('Объект всех новостей!!!: ', news);
         //console.log('Номер страницы из паганиции, который кликнули ', page);
-
         catalogNewsListFilter = news.items.filter((element) => {
             let includedInRange = false; 
             const dateNewsFormatString = dayjs(element.dateNewsFormat).format('DD.MM.YYYY');
@@ -52,7 +51,6 @@ export function CatalogNews({page, setPage}) {
                 const yearNumber = parseInt(yearString);
                 includedInRange = ((yearNumber >= yearInterval.min) && (yearNumber <= yearInterval.max));
             } 
-
             //добавим фильтр по отбору по заголовку новости
             const includedSearchName =  element.title.toLowerCase().includes(inputName);
             //console.log('ТИП НОВОСТИ', element.typesProgramStore);
@@ -128,7 +126,6 @@ export function CatalogNews({page, setPage}) {
                                         id={obj._id}
                                         title={obj.title}
                                         imageUrl={obj.imageUrl ? `http://localhost:5000${obj.imageUrl}` : ''}
-                                        createdAt={'12 июня 2022 г.'}
                                         isEditable={data !== undefined && data !== null} // Check if data is not undefined or null
                                         textNews={obj.text}
                                         typesProgramStore={obj.typesProgramStore}

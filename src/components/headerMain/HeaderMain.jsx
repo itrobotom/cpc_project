@@ -6,9 +6,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVk } from '@fortawesome/free-brands-svg-icons';
-
 import EmailIcon from '@mui/icons-material/Email';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { logout } from '../../store/reducers/auth';
 
@@ -70,29 +68,11 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
           </div>
           <div className="right-icons">
             <Box
-            sx={{
-              paddingRight: "10rem",
-            }}
+              sx={{
+                paddingRight: "10rem",
+              }}
             >
-              {/* иконки не из MUI */}
-              {/* <IconButton aria-label="add" className="icon">
-                <a href="mailto:cpc@education70.ru">
-                  <img src="/logo/letter.png" alt="Ваше изображение" style={{ height: '40px'}}/>
-                </a>  
-              </IconButton>
-              <IconButton aria-label="add" className="icon">
-                <a href="https://vk.com/cpc.tomsk">
-                  <img src="/logo/vk.png" alt="Ваше изображение" style={{ height: '40px'}}/>
-                </a>  
-              </IconButton>
-              <IconButton aria-label="add" className="icon">
-                <a href="https://youtu.be/y5L7gmQhcWI?si=Zw2ONelvaiOgqn0D">
-                  <img src="/logo/youtube.png" alt="Ваше изображение" style={{ height: '40px'}}/>
-                </a>  
-              </IconButton> */}
-              {/* <FontAwesomeIcon icon="fa-brands fa-vk" /> */}
-              {/* цвет иконок #808080 */}
-              
+              {/* цвет иконок серый #808080 */}    
               <IconButton aria-label="email">
                 <a href="mailto:cpc@education70.ru" target="_blank">
                   <EmailIcon  style={{ color: 'grey', verticalAlign: 'middle' }}/>
@@ -110,14 +90,18 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
               </IconButton>
             </Box>
             <IconButton aria-label="add" className="icon">
-            {isLogin && 
-              <Link to={"/addnews"}> 
-                <NewspaperIcon style={{ color: 'grey' }}/>
-              </Link>
+              {isLogin && 
+                <Link to={"/addnews"}> 
+                  <NewspaperIcon style={{ color: 'grey' }}/>
+                </Link>
               }
             </IconButton>
             <IconButton aria-label="add" className="icon">
-              {isLogin && <AddCircleOutlineIcon style={{ color: 'grey' }}/>}
+              {isLogin && 
+                <Link to={"/addprogram"}> 
+                  <AddCircleOutlineIcon style={{ color: 'grey' }}/>
+                </Link>
+              }
             </IconButton>
 
             <IconButton aria-label="add" className="icon">

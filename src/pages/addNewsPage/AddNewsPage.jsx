@@ -11,7 +11,7 @@ import 'easymde/dist/easymde.min.css';
 import './AddNewsPage.css'
 import { useNewsForm } from './useNewsForm';
 
-import ImageUploader from '../../components/upload/ImageUploader';
+import ImageUploader from '../../components/ImageUploader/ImageUploader';
 
 export const AddNewsPage = () => {
   const { //данные формы
@@ -120,7 +120,7 @@ export const AddNewsPage = () => {
           handleLinkNews = {handleLinkNews}
         />
 
-        <ImageUploader setImageUrl = {setImageUrl}/>
+        <ImageUploader setImageUrl = {setImageUrl} url={'uploads_news_image'} folder={'newsImage'}/>
         
         {/* проверка наличия ссылки на изображение и добавления удаления, если оно есть (если есть ссылки, ести и изображение) */}
         {imageUrl && (
@@ -128,7 +128,9 @@ export const AddNewsPage = () => {
             <Button variant="contained" color="error" onClick={onClickRemoveImage}>
               Удалить
             </Button>
-            <img className="image" src={`http://localhost:5000${imageUrl}`} alt="Uploaded" />
+            <Box mt={2}>
+              <img className="image-poster" src={`http://localhost:5000${imageUrl}`} alt="Uploaded" />
+            </Box>
           </>
           
         )}

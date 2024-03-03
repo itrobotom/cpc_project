@@ -92,7 +92,11 @@ function Header() { //function Header({head, isLogin, setIsLogin})
               }
             </IconButton>
             <IconButton aria-label="add" className="icon">
-              {isLogin && <AddCircleOutlineIcon style={{ color: 'grey' }}/>}
+              {isLogin && 
+                <Link to={"/addprogram"}> 
+                  <AddCircleOutlineIcon style={{ color: 'grey' }}/>
+                </Link>
+              }
             </IconButton>
 
             <IconButton aria-label="add" className="icon">

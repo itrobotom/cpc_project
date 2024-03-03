@@ -13,7 +13,6 @@ const MIN_SYMBOL_COUNT = 300;
 export const CardNews = ({
   id,
   title,
-  createdAt,
   imageUrl,
   isFullPost,
   isLoading,
@@ -32,7 +31,7 @@ export const CardNews = ({
 
   const dispatch = useDispatch();
   const onClickRemove = () => {
-    dispatch(fetchRemoveNews(id))
+    confirm("Вы действительно хотите удалить новость") && dispatch(fetchRemoveNews(id));
   };
 
   const [isLongText, setIsLongText] = useState(false);
@@ -44,7 +43,7 @@ export const CardNews = ({
   return (
     <div>
       {isEditable && (
-        <div>
+        <Box style={{ textAlign: "right" }}>
           <a href={`/news/${id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
@@ -53,7 +52,7 @@ export const CardNews = ({
           <IconButton onClick={onClickRemove} color="secondary">
             <DeleteIcon />
           </IconButton>
-        </div>
+        </Box>
       )}
       <Typography ml='0px' color="#000000" variant="h4" gutterBottom>{title}</Typography>
       {imageUrl && (
@@ -93,8 +92,8 @@ export const CardNews = ({
           ) : null}
           
           {linkNews && (
-            <Typography>
-              <a href={linkNews} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none' }}>
+            <Typography style={{ textAlign: "right" }}>
+              <a href={linkNews} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none'}}>
                 <b>Подробнее в источнике</b>
               </a>
             </Typography>
@@ -108,12 +107,13 @@ export const CardNews = ({
           )}
         </Typography>
         {!isExpanded && isLongText &&(
-          <Button onClick={handleToggleExpand}>
-            читать далее...
-          </Button>
+          <Box style={{ textAlign: "right" }}>
+            <Button onClick={handleToggleExpand}>
+              читать далее...
+            </Button>
+          </Box>
         )}
       </div>
-      {/* <Typography>{createdAt}</Typography> */}
     </div>
   );
 };
