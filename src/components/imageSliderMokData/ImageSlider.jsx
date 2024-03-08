@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import CardMedia from '@mui/material/CardMedia';
 import Fade from '@mui/material/Fade';
-
-const TIME_ANIMATION_MS = 500; //пауза перехода 
-const TIME_SLIDE_MS = 3000; //пауза при пролистывании изображений 
+import programsData from '../../data/programs-data.json';
   
-const ImageSlider = ({ arr_img_url }) => {
+  const ImageSlider = ({ idProgramm }) => {
+    const objAll = programsData.find((obj) => obj.idProgramm === idProgramm);
+  const arrPhotosProgramm = objAll.photosProgram;
+
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
   const changeImage = () => {
     setIsVisible(false); // Начинаем анимацию исчезновения
     setTimeout(() => {
-      setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % arr_img_url.length);
+      setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % arrPhotosProgramm.length);
       setIsVisible(true); // Завершаем анимацию исчезновения и начинаем анимацию появления
-    }, TIME_ANIMATION_MS); 
+    }, 1000); // Измените на нужную вам паузу в миллисекундах
   };
 
   useEffect(() => {
-    const intervalId = setInterval(changeImage, TIME_SLIDE_MS); 
+    const intervalId = setInterval(changeImage, 3000); // Измените на нужный вам интервал в миллисекундах
 
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <Fade key={currentPhotoIndex} in={isVisible} timeout={1000}>
+    
+    <Fade key={currentPhotoIndex} in={isVisible} timeout={1000}
+    >
       <CardMedia
         component="img"
         sx={{ width: '95%', m: 0, ml: 2, height: '400px', minWidth: '50%' }}
-        image={`http://localhost:5000${arr_img_url[currentPhotoIndex]}`} // Используем текущий индекс для получения URL из массива
-        alt={`photo_${currentPhotoIndex}`} // В качестве альтернативного текста используем индекс
+        image={arrPhotosProgramm[currentPhotoIndex].path}
+        alt={`photo_${arrPhotosProgramm[currentPhotoIndex].id}`}
       />
     </Fade>
   );

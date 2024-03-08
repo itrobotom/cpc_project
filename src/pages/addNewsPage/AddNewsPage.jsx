@@ -11,7 +11,7 @@ import 'easymde/dist/easymde.min.css';
 import './AddNewsPage.css'
 import { useNewsForm } from './useNewsForm';
 
-import ImageUploader from '../../components/ImageUploader/ImageUploader';
+import ImageUploader from '../../components/upload/ImageUploader/ImageUploader';
 
 export const AddNewsPage = () => {
   const { //данные формы
@@ -38,8 +38,6 @@ export const AddNewsPage = () => {
   const isEditingNews = Boolean(id); //то есть если есть id, значит 
   //console.log({title, text}); //проверим, чтобы сохраняются ли введенные данные 
   const typesProgramStore = useSelector(state => state.valueFilters.type); //устанавливаем тип новости при добавлении ее 
-
-
 
   const options = useMemo(
     () => ({

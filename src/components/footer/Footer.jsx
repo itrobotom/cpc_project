@@ -20,7 +20,7 @@ function Footer() {
         Email: cpc@education70.ru
       </Typography>
 
-      <Grid container spacing={2} justifyContent="center" mt={4}>
+      <Grid container spacing={2} justifyContent="center" mt={1}>
         <Grid item>
           <IconButton aria-label="email">
             <a href="mailto:cpc@education70.ru" target="_blank">
@@ -43,8 +43,7 @@ function Footer() {
           </IconButton>
         </Grid>
       </Grid>
-
-      <Typography variant="body2" mt={4}>
+      <Typography variant="body2" mt={1}>
         © Copyright 2024
       </Typography>
     </Box>

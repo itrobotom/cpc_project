@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import axiosBase from '../../axios';
+import axiosBase from '../../../axios';
 import { Button, Box } from '@mui/material';
 import "./ImageUploaderMany.css"
 

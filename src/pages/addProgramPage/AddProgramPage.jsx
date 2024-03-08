@@ -2,7 +2,6 @@ import { React, useMemo, useRef, useEffect, useState } from 'react';
 import { TextField, Paper, Button, Box, Typography }  from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Clear';
 import axiosBase from '../../axios';
 // import { FormNews } from './FormNews';
 import "./AddProgramPage.css"
@@ -12,14 +11,17 @@ import TypeProgramKlimov from './TypeProgramKlimov.jsx';
 import TypeProgram from './TypeProgram.jsx';
 import 'easymde/dist/easymde.min.css';
 import './AddProgramPage.css'
-import ShortInput from './ShortInput.jsx';
+import MainInput from './MainInput.jsx';
 import AgeInterval from './AgeInterval.jsx';
 import NumbersStudent from './NumbersStudent.jsx';
 import AddInstructor from './AddInstructor.jsx';
 import InputTextProgram from './InputTextProgram.jsx';
-import ImageUploader from '../../components/ImageUploader/ImageUploader.jsx';
-import FileUploader from '../../components/fileUploader/FileUploader.jsx'
-import UploadImageGallery from '../../components/uploadImageGalery/UploadImageGalery.jsx';
+import ImageUploader from '../../components/upload/ImageUploader/ImageUploader.jsx';
+import FileUploader from '../../components/upload/fileUploader/FileUploader.jsx'
+
+import ImageUploaderMany from '../../components/upload/ImageUploaderMany/ImageUploaderMany.jsx';
+import ImageGalleryWithDeletion from '../../components/upload/imageGalleryWithDeletion/ImageGalleryWithDeletion.jsx';
+
 import AddLinkPosts from './AddLinkPosts.jsx';
 
 export const AddProgramPage = () => {
@@ -28,6 +30,8 @@ export const AddProgramPage = () => {
 
   const [titleProgram, setTitleProgram] = useState(''); //название образовательной программы
   const [shortTitleProgram, setShortTitleProgram] = useState(''); //укороченное называние образовательной программы
+  const [numLessons, setNumLessons] = useState(''); //количество занятий в неделю
+  const [trainingPeriod, setTrainingPeriod] = useState(''); //срок обучения по программе
   const [linkVideo, setLinkVideo] = useState(''); //ссылка на видео
   const [commentVideo, setCommentVideo] = useState(''); //примечание к видео
   const [linkGroup, setLinkGroup] = useState(''); //ссылка на группу в соцсетях
@@ -42,42 +46,19 @@ export const AddProgramPage = () => {
   const [linkPosts, setLinkPost] = useState([]); 
   const [fileUrl, setFileUrl] = useState(''); 
   const [arrLinkImg, setArrLinkImg] = useState([]); 
-  //console.log("Массив с фотками для программы ", arrLinkImg);
-  // const { //данные формы
-  //   imageUrl, setImageUrl,
-  //       text, setText,
-  //       title, setTitle,
-  //       linkProgramm, setLinkProgramm,
-  //       programName, setProgramName,
-  //       handleProgramNameChange,
-  //       linkNews, setLinkNews,
-  //       handleLinkNews,
-  //       dateNews,
-  //       handleDateChange,
-  //       handleLinkProgrammChange,
-  //       onClickRemoveImage,
-  //       handelNameNews,
-  //       handelChangeTextNews,
-  // } = useNewsForm();
+
+  const MAX_ALL_IMG = 8;
 
   const isAuth = Boolean(useSelector(state => state.auth.data)); //проверим, выполнена ли авторизация (если да, в стейте будут данные)
   const navigate = useNavigate(); 
-  //const inputFileRef = useRef(null); //для переноса клика с кнопки на input
-  const { id } = useParams(); 
-  const isEditingProgram = Boolean(id); //то есть если есть id, значит 
-
-  //console.log({title, text}); //проверим, чтобы сохраняются ли введенные данные 
-  // console.log("Типы программ", {typesProgramKlimov, typesProgram}); 
-  // console.log("Основные поля формы ", {titleProgram, shortTitleProgram, linkVideo, linkGroup, isBudgetProgramm});
-  // console.log("Возрастной интервал ", ageRangeProgram);
-  // console.log("Данные учителя(ей) ", instructors);
-  // console.log("Ссылка на постер ", imageUrl);
-
-
   if(!window.localStorage.getItem('token') && !isAuth) { //Перейти на главную страницу</Link>; //если мы не авторизованы, то перейдем на главную страницу
     navigate("/"); // перейти на главную страницу
     return null; // или возвращайте null после перенаправления
   }
+
+  //const inputFileRef = useRef(null); //для переноса клика с кнопки на input
+  const { id } = useParams(); 
+  const isEditingProgram = Boolean(id); //то есть если есть id, значит 
 
   //отправка данных на сервер
   const onSubmit = async () => {
@@ -88,6 +69,8 @@ export const AddProgramPage = () => {
         typesProgram,
         titleProgram,
         shortTitleProgram,
+        numLessons,
+        trainingPeriod,
         linkVideo,
         commentVideo,
         linkGroup,
@@ -102,39 +85,58 @@ export const AddProgramPage = () => {
         fileUrl,
         arrLinkImg
       }
-      console.log("Данные перед отправкой на сервер ", allDataProgram)
-
-      //проверяем, редактируется ли программа или заново создается 
-      const { data } = isEditingProgram 
-      ? await axiosBase.patch(`/program/${id}`, allDataProgram) : await axiosBase.post('/program', allDataProgram); 
-
-      const _id = isEditingProgram ? id : data._id; //записываем в _id то же самое значение, если редактируем, 
-                                                 //а иначе получаем новый от сервера, если статья создается с нуля
-      //ЗДЕСЬ МОЖНО СДЕЛАТЬ ПЕРЕХОД ПРЯМ НА ОТДЕЛЬНУЮ СТРАНИЦУ НОВОСТИ, ТАК БУДЕТ КАК РАЗ ДЛЯ ОБРАЗОВАТЕЛЬНОЙ ПРОГРАММЫ
-      // по наличию id поймем, создана статья или нет
+      //console.log("Данные перед отправкой на сервер ", allDataProgram)
       
-      //navigate("/news"); // перейти на страницу история успеха
+      if(typesProgramKlimov.length === 0 || typesProgram.length === 0 ||
+        typesProgram === "" || shortTitleProgram === "" ||
+        shortTitleProgram === "" || numLessons === "" || trainingPeriod === "" ||
+        ageRangeProgram.length === 0 || numberStudents.length === 0 ||
+        instructors.length === 0 || textProgram === "" || imageUrl=== "") {
+          alert("Не все обязательные поля, отмеченные *, заполнены!")
+      } else{
+          //проверяем, редактируется ли программа или заново создается 
+          const { data } = isEditingProgram 
+          ? await axiosBase.patch(`/program/${id}`, allDataProgram) : await axiosBase.post('/program', allDataProgram); 
+          const _id = isEditingProgram ? id : data._id; //записываем в _id то же самое значение, если редактируем, 
+                                                 //а иначе получаем новый от сервера, если программа создается с нуля
+          navigate(`/learn/description_programm/${_id}`); // перейти на страницу созданной или сохраненной программы 
+      }
     } catch (err){
       console.warn(err); 
       alert('Проблема с публикацией программы', err); 
     }
   }
 
-  // useEffect(() => { // после рендера страницы сразу проверим наличие id, и если он есть - значит происходит редактирование статьи и заполним поля формы данными
-  //   if(isEditingProgram) {
-  //     axiosBase.get(`/news/${id}`).then(({data}) => {
-  //       setTitle(data.title);
-  //       setText(data.text);
-  //       setImageUrl(data.imageUrl);
-  //       setProgramName(data.programName);
-  //       setLinkProgramm(data.linkProgramm);
-  //       setLinkNews(data.linkNews);   
-  //     }).catch(err => {
-  //       console.warn(err);
-  //       alert('Ошибка получения программы');
-  //     })   
-  //   }
-  // }, []);
+  useEffect(() => { // после рендера страницы сразу проверим наличие id, и если он есть - значит происходит редактирование статьи и заполним поля формы данными
+    if(isEditingProgram) {
+      axiosBase.get(`/programs/${id}`).then(({data}) => {
+        //console.log("данные для заполнения полей ", data);
+
+        setTypesProgramKlimov(data.typesProgramKlimov);
+        setTypesProgram(data.typesProgram);
+        setTitleProgram(data.titleProgram);
+        setShortTitleProgram(data.shortTitleProgram);
+        setNumLessons(data.numLessons);
+        setTrainingPeriod(data.trainingPeriod);
+        setLinkVideo(data.linkVideo);
+        setCommentVideo(data.commentVideo);
+        setLinkGroup(data.linkGroup);
+        setCommentProgram(data.commentProgram);
+        setIsBudgetProgramm(data.isBudgetProgramm);
+        setAgeRangeProgram(data.ageRangeProgram);
+        setNumberStudents(data.numberStudents);
+        setInstructors(data.instructors);
+        setTextProgram(data.textProgram);
+        setImageUrl(data.imageUrl);
+        setLinkPost(data.linkPosts);
+        setFileUrl(data.fileUrl);
+        setArrLinkImg(data.arrLinkImg);
+      }).catch(err => {
+        console.warn(err);
+        alert('Ошибка получения программы');
+      })   
+    }
+  }, []);
 
   return (
     <>
@@ -143,9 +145,11 @@ export const AddProgramPage = () => {
         <Typography variant="h6" fontWeight="bold" gutterBottom>
             Заполните данные для добавления программы. Обязательные поля отмечены звездочкой.
         </Typography>
-        <ShortInput 
+        <MainInput 
           titleProgram={titleProgram} setTitleProgram={setTitleProgram} 
           shortTitleProgram={shortTitleProgram} setShortTitleProgram={setShortTitleProgram}  
+          numLessons={numLessons} setNumLessons={setNumLessons}
+          trainingPeriod={trainingPeriod} setTrainingPeriod={setTrainingPeriod}
           linkVideo={linkVideo} setLinkVideo={setLinkVideo} 
           linkGroup={linkGroup} setLinkGroup={setLinkGroup} 
           commentVideo={commentVideo} setCommentVideo={setCommentVideo}
@@ -159,29 +163,19 @@ export const AddProgramPage = () => {
         <AddInstructor instructors={instructors} setInstructors={setInstructors}/>
         <InputTextProgram textProgram={textProgram} setTextProgram={setTextProgram}/>
         <AddLinkPosts linkPosts={linkPosts} setLinkPost={setLinkPost} />
-        {/* ПОЛЯ ФОРМЫ ТУТ БУДУТ */}
-        {/* <FormNews 
-          dateNews = {dateNews}
-          handleDateChange = {handleDateChange} 
-          programName = {programName}
-          handleProgramNameChange = {handleProgramNameChange}
-          linkProgramm = {linkProgramm} 
-          handleLinkProgrammChange = {handleLinkProgrammChange}
-          linkNews = {linkNews}
-          handleLinkNews = {handleLinkNews}
-        /> */}
-        
 
         <Typography variant="h6" gutterBottom>
-            Загрузить постер образовательной программы:
+            Загрузить постер образовательной программы*:
         </Typography>
-        <ImageUploader url={'uploads_news_image_poster'} folder={'postersPrograms'} imageUrl={imageUrl} setImageUrl={setImageUrl}/>       
+        <ImageUploader url={'uploads_news_image_poster'} folder={'postersPrograms'} imageUrl={imageUrl} setImageUrl={setImageUrl}/>    
 
         <Typography variant="h6" gutterBottom>
             Загрузите изрображения (как проходят занятия) только в горизонтальном фаормате 1-8 шт:
         </Typography>
 
-        <UploadImageGallery url={'uploads_image_program'} folder={'programImage'} numImages={8} arrLinkImg={arrLinkImg} setArrLinkImg={setArrLinkImg} />
+        <ImageUploaderMany url={'uploads_image_program'} folder={'programImage'} setArrLinkImg={setArrLinkImg} maxNumImage={MAX_ALL_IMG} arrLinkImg={arrLinkImg}/>
+
+        <ImageGalleryWithDeletion imageUrls={arrLinkImg} setArrLinkImg={setArrLinkImg}/> 
 
         <Typography variant="h6" gutterBottom>
             Загрузить файл образовательной программы:

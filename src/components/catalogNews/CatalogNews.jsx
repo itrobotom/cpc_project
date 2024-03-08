@@ -26,7 +26,7 @@ export function CatalogNews() {
 
     const COUNT_TYPES_NEWS = 9;
 
-    useEffect(() => {
+    useEffect(() => { //прием данных с сервера о всех новостях
         dispatch(fetchNews())
     }, [])
 
@@ -114,7 +114,7 @@ export function CatalogNews() {
                         >
                         {/* <CircularProgress color="success"/> */}
                         <Stack sx={{ width: '70%', color: 'grey.500' }} spacing={2}>
-                            <LinearProgress color="success" />
+                            <LinearProgress />
                         </Stack>
                         </Box>
                     ) : (
@@ -126,7 +126,7 @@ export function CatalogNews() {
                                         id={obj._id}
                                         title={obj.title}
                                         imageUrl={obj.imageUrl ? `http://localhost:5000${obj.imageUrl}` : ''}
-                                        isEditable={data !== undefined && data !== null} // Check if data is not undefined or null
+                                        isEditable={data !== undefined && data !== null} // если данные есть, то авторизованы и значит можно удалять/редактировать
                                         textNews={obj.text}
                                         typesProgramStore={obj.typesProgramStore}
                                         programName={obj.programName}

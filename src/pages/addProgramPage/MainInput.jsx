@@ -1,9 +1,11 @@
 import { React, useCallback } from 'react';
 import { TextField, Box, Typography, Checkbox, FormControlLabel }   from '@mui/material';
 
-const ShortInput = ({
+const MainInput = ({
     titleProgram, setTitleProgram, 
-    shortTitleProgram, setShortTitleProgram,  
+    shortTitleProgram, setShortTitleProgram,
+    numLessons, setNumLessons,
+    trainingPeriod,setTrainingPeriod,
     linkVideo, setLinkVideo,
     linkGroup, setLinkGroup,
     isBudgetProgramm, setIsBudgetProgramm,
@@ -16,6 +18,13 @@ const ShortInput = ({
 
     const handleProgramShortTitleChange = useCallback((text) => {
         setShortTitleProgram(text.target.value);
+    }, []);
+    const handleNumLessons = useCallback((text) => {
+        setNumLessons(text.target.value);
+    }, []);
+
+    const handleTrainingPeriod = useCallback((text) => {
+        setTrainingPeriod(text.target.value);
     }, []);
 
     const handleLinkVideo = useCallback((text) => {
@@ -72,6 +81,34 @@ const ShortInput = ({
                     label="Введите сокращенное название программы"
                     value={shortTitleProgram}
                     onChange={handleProgramShortTitleChange}
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                />
+            </Box>
+            <Box>
+                <Typography variant="h6" gutterBottom>
+                    Введите количество занятий в неделю (например: 1 занятие, 2 занятия)*:
+                </Typography>
+                <TextField
+                    id="title-short-program"
+                    label="Введите количество занятий в неделю"
+                    value={numLessons}
+                    onChange={handleNumLessons}
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                />
+            </Box>
+            <Box>
+                <Typography variant="h6" gutterBottom>
+                    Введите срок обучения по программе (например: 1 год, 2 года, пол года)*:
+                </Typography>
+                <TextField
+                    id="title-short-program"
+                    label="Введите сокращенное название программы"
+                    value={trainingPeriod}
+                    onChange={handleTrainingPeriod}
                     fullWidth
                     variant="outlined"
                     margin="normal"
@@ -141,4 +178,4 @@ const ShortInput = ({
     )
 }
 
-export default ShortInput;
+export default MainInput;

@@ -4,13 +4,14 @@ export const useNewsForm = () => {
     
     const [titleProgram, setTitleProgram] = useState(''); //название образовательной программы
     const [shortTitleProgram, setShortTitleProgram] = useState(''); //укороченное называние образовательной программы
-    const [ageRangeProgram, setAgeRangeProgram] = useState([]); //диапазон возраста (будет минимум и максимум число)
     const [isBudgetProgramm, setIsBudgetProgramm] = useState(true); //бюджетная или платная улслуга (флаг)
-    const [numberStudents, setNumberStudents] = useState([]); //количество учеников в группе (будет минимум и максимум число)
     const [linkVideo, setLinkVideo] = useState(''); //ссылка на видео
     const [linkGroup, setLinkGroup] = useState(''); //ссылка на группу в соцсетях
 
-    const [dataInstructor, setDataInstructor] = useState([]); //массив учителей (фио, почта, id сферума, ссылка на личную страничку)
+    const [ageRangeProgram, setAgeRangeProgram] = useState([6, 18]); //диапазон возраста (будет минимум и максимум число)
+    const [numberStudents, setNumberStudents] = useState([1, 15]); //количество учеников в группе (будет минимум и максимум число)
+
+    const [instructors, setInstructors] = useState([]); //массив учителей (фио, почта, id сферума, ссылка на личную страничку)
     
     const [posterUrl, setPosterUrl] = useState(''); //ссылка на постер (прийдет от сервера, когда загрузится на сервер)  
 

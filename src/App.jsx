@@ -52,14 +52,19 @@ function App() {
 			element: <AddNewsPage />,
 		},
 		{
+			path: "/news/:id/edit",
+			//при клике редактирования мы передадим id и перейдем на урл edit и откроется то же окно как при создании
+			element: <AddNewsPage />, 
+		},
+		{
 			path: "/addprogram",
 			element: <AddProgramPage />,
 		},
 		{
-			path: "/news/:id/edit",
+			path: "/program/:id/edit",
 			//при клике редактирования мы передадим id и перейдем на урл edit и откроется то же окно как при создании
-			element: <AddNewsPage />, 
-		}
+			element: <AddProgramPage />,
+		},
     // programm_id обычно получают из loader с помощью которого делают асинхронный запрос на сервер
 	]);
 

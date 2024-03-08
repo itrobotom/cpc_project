@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosBase from '../../axios';
+import axiosBase from '../../../axios';
 import ImageUploaderMany from '../ImageUploaderMany/ImageUploaderMany';
 import { Button, Box } from '@mui/material';
 

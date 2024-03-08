@@ -1,29 +1,15 @@
-import { React, useEffect } from "react";
+import { React } from "react";
+import programsData from '../../data/programs-data.json';
 import { Box, Typography } from "@mui/material";
 import { CardProgram } from "../cardProgram/CardProgram";
-import { useSelector, useDispatch } from "react-redux"; 
-import { fetchPrograms } from "../../store/reducers/programs";
+import { useSelector } from "react-redux"; 
 
 const CatalogFavoritePrograms = () => {
-    const dispatch = useDispatch();
-    const { data } = useSelector((state) => state.auth); // Данные пользователя (для проверки авторизации)
-    const isAuth = (data !== undefined && data !== null); // флаг на авторизацию
-    console.log("Админ авторизован ", isAuth);
-    useEffect(() => {
-        // Запрашиваем все программы из базы и передаем статус аутентификации
-        dispatch(fetchPrograms(isAuth));
-    }, [dispatch, isAuth]); // Запускаем запрос при изменении статуса аутентификации
-
-    const { programs } = useSelector((state) => state.programs); // Все программы объектом
-    const isLoadingPrograms = programs.status === 'loading';
-    console.log("Все программы ", programs);
-
-
     //подписываемся на список Id избранных карточек программ в сторе (благодаря этому происходит перерндер при изменении массива избранных стора)
     const arrFavoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
     
     // Фильтруем программы, чтобы получить только избранные
-    const favoritePrograms = programs.items.filter(program => localStorage.getItem(program._id) !== null);
+    const favoritePrograms = programsData.filter(program => localStorage.getItem(program.id) !== null);
     // Вычисляем количество избранных программ
     const countCardsFavorite = favoritePrograms.length;
 

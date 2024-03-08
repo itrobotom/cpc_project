@@ -6,7 +6,6 @@ import { fetchRemoveNews } from '../../store/reducers/news';
 import { Box, Typography, IconButton, CardMedia, Link, Button } from "@mui/material";
 import dayjs from 'dayjs';
 
-import styles from './CardNews.css';
 import Markdown from 'react-markdown'
 
 const MIN_SYMBOL_COUNT = 300; 
@@ -18,7 +17,6 @@ export const CardNews = ({
   isLoading,
   isEditable,
   textNews,
-  typesProgramStore,
   dateNewsFormat,
   linkProgramm,
   linkNews,

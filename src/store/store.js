@@ -4,6 +4,7 @@ import valueFilterSlice from "./reducers/FilterPanelSlice";
 import newsFilterSlice from "./reducers/FilterNewsPanelSlice";
 import newsSlice from "./reducers/news";
 import authSlice from "./reducers/auth";
+import programsSlice from "./reducers/programs"
 
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     valueFilters: valueFilterSlice,
     valueFiltersNews: newsFilterSlice,
     news: newsSlice,
+    programs: programsSlice,
     auth: authSlice,
 });
 export const store = configureStore({

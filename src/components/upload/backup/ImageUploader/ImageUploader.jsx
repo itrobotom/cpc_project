@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import axiosBase from '../../axios';
+import axiosBase from '../../../axios';
 import { Button, Box } from '@mui/material';
 import "./ImageUploader.css"
 
@@ -21,9 +21,6 @@ const generateRandomString = (length) => {
 const ImageUploader = ({ url, folder,  imageUrl, setImageUrl}) => {
     const inputFileRef = useRef(null);
 
-    // const onClickRemoveImage = () => {
-    //     setImageUrl(''); //удаляем url изображения
-    // };
     const handleRemoveFile = async () => {
         try {
             console.log('Путь для удаления фото ', imageUrl);
