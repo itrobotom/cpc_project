@@ -10,12 +10,21 @@ const ImageGalleryWithDeletion = ({ imageUrls, setArrLinkImg }) => {
             // Удаление изображения на сервере
             await axiosBase.delete(imageUrl);
             console.log('Фото успешно удалено');
-
+    
             // Обновление массива урлов после удаления
             setArrLinkImg(arr => arr.filter(url => url !== imageUrl));
         } catch (err) {
             console.error('Ошибка при удалении фото: ', err);
-            alert('Произошла ошибка при удалении фото');
+    
+            // Если возникла ошибка, но изображение было удалено, нужно обновить массив урлов
+            if (err.response && err.response.status === 404) {
+                console.log('Изображение уже удалено с сервера');
+    
+                // Обновление массива урлов после удаления
+                setArrLinkImg(arr => arr.filter(url => url !== imageUrl));
+            } else {
+                alert('Произошла ошибка при удалении фото');
+            }
         }
     };
 

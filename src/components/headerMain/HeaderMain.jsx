@@ -35,6 +35,13 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
   //   console.log('После удаления токена вот такой флаг авторизации: ', isLogin); 
   // }
 
+  const handleReviewsClick = () => {
+    const reviewsSection = document.getElementById('reviews');
+    if (reviewsSection) {
+      reviewsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="header-container">
       <Box
@@ -46,7 +53,7 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
         <div className="header">
           <div className="center-logo">
             <IconButton aria-label="add" className="icon">
-              <img src="/logo/logonew2.png" alt="Ваше изображение" style={{ height: '80px'}}/>
+              <img src="/logo/cpcNew.png" alt="Ваше изображение" style={{ height: '40px'}}/>
             </IconButton>
           </div>
           <div className="left-buttons">
@@ -62,9 +69,9 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
             <Link to={"/faq"}>
               <button className="button-home">Ответы на вопросы</button>
             </Link>
-            <Link to={"/reviews"}>
-              <button className="button-home">Отзывы</button>
-            </Link>
+            {/* <Link to={"/reviews"}> */}
+              <button className="button-home" onClick={handleReviewsClick}>Отзывы</button>
+            {/* </Link> */}
           </div>
           <div className="right-icons">
             <Box

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Grid, Paper, Avatar } from '@mui/material';
 
-const Reviews = () => {
+const Reviews = ({bgColor}) => {
   const reviewsData = [
     {
       id: 1,
@@ -26,7 +26,7 @@ const Reviews = () => {
   ];
 
   return (
-    <Box py={4} bgcolor="#fff" style={{ margin: '0 auto', paddingBottom: '70px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#4FD1C5' }}>
+    <Box py={4} bgcolor="#fff" style={{ margin: '0 auto', paddingBottom: '70px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: bgColor }}>
       <Typography variant="h4" align="center" gutterBottom style={{ marginBottom: '10px', marginTop: '30px' }}>
         Отзывы
       </Typography>
@@ -50,7 +50,7 @@ const Reviews = () => {
                   marginLeft: 'auto', // Смещение вправо
                 }}
               >
-                <Avatar sx={{ width: 40, height: 40, backgroundColor: '#4FD1C5', marginRight: 1 }} />
+                <Avatar sx={{ width: 40, height: 40, backgroundColor: bgColor, marginRight: 1 }} />
                 <Typography variant="subtitle2">{review.author}</Typography>
               </Box>
             </Paper>

@@ -40,7 +40,7 @@ function CardProgram({program, isFavoriteCardDefault, isEditable}) {
         setIsFavoriteCard(isFavoriteCardDefault);
     }, [isFavoriteCardDefault]);
 
-    const heightCard = isEditable ? 620 : 560; //добавляем высоту для знчков удаления и редактирования 
+    const heightCard = isEditable ? 610 : 560; //добавляем высоту для знчков удаления и редактирования 
     return (
         <Card className="custom-card" sx = {{ width: 340, height: heightCard, mr: '20px', mb: '20px' }}>
             <CardActionArea className="card-action-area">
@@ -52,9 +52,9 @@ function CardProgram({program, isFavoriteCardDefault, isEditable}) {
                                 <EditIcon />
                             </IconButton>  
                         </a>
-                        <IconButton onClick={onClickRemove} color="secondary">
+                        {/* <IconButton onClick={onClickRemove} color="secondary">
                             <DeleteIcon />
-                        </IconButton>
+                        </IconButton> */}
                     </Box>
                 )}
                 <Link

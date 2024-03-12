@@ -115,12 +115,13 @@ const MainInput = ({
                 />
             </Box>
             <Box>
+                {/* НАДО ДОБАВИТЬ ВАЛИДАЦИЮ НА ССЫЛКУ, ЕСЛИ НЕТ HTTP И ТД, ТО ПРИ РЕНДЕРЕ ПРОГРАММЫ ПРОБЛЕМЫ */}
                 <Typography variant="h6" gutterBottom>
                     Введите ссылку на видео:
                 </Typography>
                 <TextField
                     id="link-video"
-                    label="Введите название программы"
+                    label="Введите ссылку на видео"
                     value={linkVideo}
                     onChange={handleLinkVideo}
                     fullWidth

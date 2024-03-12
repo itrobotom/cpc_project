@@ -7,7 +7,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-const Advantages = () => {
+const Advantages = ({bgColor}) => {
   const advantagesData = [
     {
       title: 'Методы обучения',
@@ -53,7 +53,7 @@ const Advantages = () => {
         {advantagesData.map((advantage, index) => (
           <Grid key={index} item xs={12} md={6}>
             <Stack direction="row" alignItems="center" mb={2}>
-              <Avatar sx={{ width: 60, height: 60, backgroundColor: '#4FD1C5', marginRight: 2 }}>
+              <Avatar sx={{ width: 60, height: 60, backgroundColor: bgColor, marginRight: 2 }}>
                 {advantage.icon}
               </Avatar>
               <Box>

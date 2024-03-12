@@ -24,7 +24,7 @@ const selectTypeNewsDefault = ["технические направления и
 const GreenAutocomplete = styled(Autocomplete)({
     '& .MuiOutlinedInput-root': {
         '&.Mui-focused fieldset': {
-        borderColor: 'green', // измените цвет фокуса на зеленый
+        //borderColor: 'green', // измените цвет фокуса на зеленый
         },
     },
 });                
@@ -67,7 +67,7 @@ function FilterTypeNews() {
       multiple
       limitTags={LIMIT_TAGS}
       options={selectTypeNewsDefault}
-      color="success"
+      //color="success"
       value={selectTypeNews} // то что выбирается согласно стейту
       getOptionLabel={(option) => option}
       onChange={handleTypeNews}
@@ -78,12 +78,12 @@ function FilterTypeNews() {
             checkedIcon={CHECKED_ICON}
             style={{ marginRight: 8 }}
             checked={selected}
-            color="success"
+            //color="success"
           />
           {option}
         </li>
       )}
-      renderInput={(params) => <TextField {...params} color="success" label="Направления" />}
+      renderInput={(params) => <TextField {...params} label="Направления" />}
       renderTags={(value, getTagProps) => {
         const numTags = value.length;
         const limitTags = LIMIT_TAGS;

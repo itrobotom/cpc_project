@@ -1,8 +1,9 @@
-import { React, useEffect, useState } from 'react';
-import { Paper, Button, Box, Typography }  from '@mui/material';
+import { React, useMemo, useRef, useEffect, useState } from 'react';
+import { TextField, Paper, Button, Box, Typography }  from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"; 
 import axiosBase from '../../axios';
+// import { FormNews } from './FormNews';
 import "./AddProgramPage.css"
 
 import HeaderMain from '../../components/headerMain/HeaderMain';
@@ -21,9 +22,8 @@ import FileUploader from '../../components/upload/fileUploader/FileUploader.jsx'
 import ImageUploaderMany from '../../components/upload/ImageUploaderMany/ImageUploaderMany.jsx';
 import ImageGalleryWithDeletion from '../../components/upload/imageGalleryWithDeletion/ImageGalleryWithDeletion.jsx';
 
-import { fetchRemoveProgram } from '../../store/reducers/programs.js';
-
 import AddLinkPosts from './AddLinkPosts.jsx';
+import { fetchRemoveProgram } from '../../store/reducers/programs.js';
 
 export const AddProgramPage = () => {
   const [typesProgramKlimov, setTypesProgramKlimov] = useState([]); //тип программы по климову
@@ -48,7 +48,9 @@ export const AddProgramPage = () => {
   const [fileUrl, setFileUrl] = useState(''); 
   const [arrLinkImg, setArrLinkImg] = useState([]); 
 
-  const MAX_ALL_IMG = 12;
+  const [isDeletingProgram, setIsDeletingProgram] = useState(false);
+
+  const MAX_ALL_IMG = 8;
 
   const dispatch = useDispatch();
 
@@ -56,11 +58,12 @@ export const AddProgramPage = () => {
   const navigate = useNavigate(); 
   if(!window.localStorage.getItem('token') && !isAuth) { //Перейти на главную страницу</Link>; //если мы не авторизованы, то перейдем на главную страницу
     navigate("/"); // перейти на главную страницу
-    return null; // и возвращайте null после перенаправления
+    return null; // или возвращайте null после перенаправления
   }
 
+  //const inputFileRef = useRef(null); //для переноса клика с кнопки на input
   const { id } = useParams(); 
-  const isEditingProgram = Boolean(id); //то есть если есть id, значит флаг isEditingProgram в true
+  const isEditingProgram = Boolean(id); //то есть если есть id, значит 
 
   //отправка данных на сервер
   const onSubmit = async () => {
@@ -89,7 +92,10 @@ export const AddProgramPage = () => {
       }
       console.log("Данные перед отправкой на сервер ", allDataProgram)
       
-      if(typesProgramKlimov.length === 0 || typesProgram.length === 0 ||
+      if(isDeletingProgram){
+        await axiosBase.patch(`/program/${id}`);
+      }
+      else if(typesProgramKlimov.length === 0 || typesProgram.length === 0 ||
         typesProgram === "" || shortTitleProgram === "" ||
         shortTitleProgram === "" || numLessons === "" || trainingPeriod === "" ||
         ageRangeProgram.length === 0 || numberStudents.length === 0 ||
@@ -101,7 +107,7 @@ export const AddProgramPage = () => {
           ? await axiosBase.patch(`/program/${id}`, allDataProgram) : await axiosBase.post('/program', allDataProgram); 
           const _id = isEditingProgram ? id : data._id; //записываем в _id то же самое значение, если редактируем, 
                                                  //а иначе получаем новый от сервера, если программа создается с нуля
-          navigate(`/learn/description_programm/${_id}`); // перейти на страницу созданной или сохраненной программы 
+          //navigate(`/learn/description_programm/${_id}`); // перейти на страницу созданной или сохраненной программы 
       }
     } catch (err){
       console.warn(err); 
@@ -109,91 +115,118 @@ export const AddProgramPage = () => {
     }
   }
 
-  useEffect(() => { // после рендера страницы сразу проверим наличие id, и если он есть - значит происходит редактирование статьи и заполним поля формы данными
-    if(isEditingProgram) {
-      axiosBase.get(`/programs/${id}`).then(({data}) => {
-        //console.log("данные для заполнения полей ", data);
-
-        setTypesProgramKlimov(data.typesProgramKlimov);
-        setTypesProgram(data.typesProgram);
-        setTitleProgram(data.titleProgram);
-        setShortTitleProgram(data.shortTitleProgram);
-        setNumLessons(data.numLessons);
-        setTrainingPeriod(data.trainingPeriod);
-        setLinkVideo(data.linkVideo);
-        setCommentVideo(data.commentVideo);
-        setLinkGroup(data.linkGroup);
-        setCommentProgram(data.commentProgram);
-        setIsBudgetProgramm(data.isBudgetProgramm);
-        setAgeRangeProgram(data.ageRangeProgram);
-        setNumberStudents(data.numberStudents);
-        setInstructors(data.instructors);
-        setTextProgram(data.textProgram);
-        setImageUrl(data.imageUrl);
-        setLinkPost(data.linkPosts);
-        setFileUrl(data.fileUrl);
-        setArrLinkImg(data.arrLinkImg);
-      }).catch(err => {
-        console.warn(err);
-        alert('Ошибка получения программы');
-      })   
+  useEffect(() => {
+    if (isEditingProgram && !isDeletingProgram) {
+        axiosBase.get(`/programs/${id}`)
+            .then(({ data }) => {
+                // Устанавливаем только те данные, которые еще не были обновлены после удаления программы
+                setTypesProgramKlimov(prevState => prevState.length === 0 ? data.typesProgramKlimov : prevState);
+                setTypesProgram(prevState => prevState.length === 0 ? data.typesProgram : prevState);
+                setTitleProgram(prevState => prevState === '' ? data.titleProgram : prevState);
+                setShortTitleProgram(prevState => prevState === '' ? data.shortTitleProgram : prevState);
+                setNumLessons(prevState => prevState === '' ? data.numLessons : prevState);
+                setTrainingPeriod(prevState => prevState === '' ? data.trainingPeriod : prevState);
+                setLinkVideo(prevState => prevState === '' ? data.linkVideo : prevState);
+                setCommentVideo(prevState => prevState === '' ? data.commentVideo : prevState);
+                setLinkGroup(prevState => prevState === '' ? data.linkGroup : prevState);
+                setCommentProgram(prevState => prevState === '' ? data.commentProgram : prevState);
+                setIsBudgetProgramm(prevState => prevState === '' ? data.isBudgetProgramm : prevState);
+                setAgeRangeProgram(prevState => prevState.length === 0 ? data.ageRangeProgram : prevState);
+                setNumberStudents(prevState => prevState.length === 0 ? data.numberStudents : prevState);
+                setInstructors(prevState => prevState.length === 0 ? data.instructors : prevState);
+                setTextProgram(prevState => prevState === '' ? data.textProgram : prevState);
+                setImageUrl(prevState => prevState === '' ? data.imageUrl : prevState);
+                setLinkPost(prevState => prevState.length === 0 ? data.linkPosts : prevState);
+                setArrLinkImg(prevState => prevState.length === 0 ? data.arrLinkImg : prevState);
+            console.log("Данные для редактирования ", data);
+            })
+            .catch(err => {
+                console.warn(err);
+                alert('Ошибка получения программы');
+            });
     }
-  }, []);
+  }, [isEditingProgram, id, isDeletingProgram]);
 
   const handleRemoveProgram = async () => {
     if (!confirm("Вы действительно хотите удалить программу")) {
         return; // Если пользователь отказался удалить программу, прерываем операцию
     }
     try {
-        // Удаление программы из БД
-        await dispatch(fetchRemoveProgram(id));
-        
         // Удаление постера программы из imageUrl
-        if (imageUrl) {
+        if (imageUrl !== "") {
             try {
                 await axiosBase.delete(imageUrl);
-                console.log('Изображение успешно удалено');
+                setImageUrl("");
+                //console.log('Постер успешно удален');
             } catch (err) {
                 console.error('Ошибка при удалении изображения: ', err);
-                // Продолжаем выполнение, так как удаление из базы данных уже выполнено
+                throw new Error('Произошла ошибка при удалении изображения');
             }
         }
-        
         // Удаление всех фото из массива arrLinkImg
         if (arrLinkImg.length > 0) {
-            await Promise.all(arrLinkImg.map(async imageUrl => {
-                try {
-                    await axiosBase.delete(imageUrl);
-                    console.log('Фото успешно удалено с адресом ', imageUrl);
-                } catch (err) {
-                    console.error('Ошибка при удалении фото: ', err);
-                    // Продолжаем выполнение, так как удаление из базы данных уже выполнено
-                }
-            }));
+            try {
+                await Promise.all(arrLinkImg.map(async imageUrl => {
+                    try {
+                        await axiosBase.delete(imageUrl);
+                        console.log('Фото успешно удалено с адресом ', imageUrl);
+                    } catch (err) {
+                        console.error('Ошибка при удалении фото: ', err);
+                        throw new Error('Произошла ошибка при удалении фото');
+                    }
+                }));
+
+                // Опустошаем массив после успешного удаления всех изображений
+                setArrLinkImg([]);
+                //console.log('Массив ссылок на изображения опустошен');
+            } catch (error) {
+                console.error('Произошла ошибка при удалении фотографий:', error.message);
+                // Вы можете выбрать, как обрабатывать ошибку удаления фотографий здесь
+                // Например, можно выбросить исключение и прервать удаление остальных файлов и программы из БД
+                throw new Error('Произошла ошибка при удалении фотографий');
+            }
         } else {
             console.log('Массив ссылок на изображения пуст.');
         }
-        
+
         // Удаление файла
-        if (fileUrl) {
+        if (fileUrl !== "") {
             try {
                 console.log('Путь для удаления файла ', fileUrl);
                 await axiosBase.delete(fileUrl);
-                console.log('Файл успешно удален');
-                setFileUrl(null);
+                setFileUrl("");
+                //console.log('Файл успешно удален');
             } catch (err) {
                 console.error('Ошибка при удалении файла: ', err);
-                // Продолжаем выполнение, так как удаление из базы данных уже выполнено
+                throw new Error('Произошла ошибка при удалении файла');
             }
         }
-        
-        //переход на главную страницу
-        navigate("/learn");
+
+        // Устанавливаем флаг удаления программы перед отправкой остальных данных на сервер
+        setIsDeletingProgram(true);
+
     } catch (error) {
-        console.error('Произошла ошибка при удалении программы из БД:', error.message);
+        console.error('Произошла ошибка при удалении файлов и программы из БД:', error.message);
         alert(error.message);
     }
   };
+
+  // Добавляем useEffect, который будет вызываться только при изменении флага isDeletingProgram
+  useEffect(() => {
+      if (isDeletingProgram) {
+          // Установите время задержки (например, 5000 миллисекунд)
+          const delay = 1000;
+          // Отправка остальных данных на сервер с задержкой после завершения всех асинхронных операций
+          setTimeout(async () => {
+              console.log('Состояние перед отправкой данных на сервер:', imageUrl, arrLinkImg, fileUrl);
+              await onSubmit();
+              // После отправки данных сбрасываем флаг удаления программы
+              // Удаление программы из БД после удаления всех файлов
+              dispatch(fetchRemoveProgram(idCard));
+              setIsDeletingProgram(false);
+          }, delay);
+      }
+  }, [isDeletingProgram]);
 
   return (
     <>
@@ -254,6 +287,7 @@ export const AddProgramPage = () => {
           <Button 
             onClick={() => onSubmit()}           
             size="large" 
+            ariant="contained"
             variant="outlined"
           >
             {isEditingProgram ? "Сохранить" : "Создать"}

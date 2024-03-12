@@ -23,7 +23,7 @@ function NewsPagination( { setPageNum, pageCount } ) {
       <Pagination
         defaultPage={DEFAULT_PAGE}
         count={pageCount}
-        color="success"
+        color="primary"
         siblingCount={0}
         onChange={handleChange}
       />

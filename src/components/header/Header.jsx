@@ -42,7 +42,7 @@ function Header() { //function Header({head, isLogin, setIsLogin})
               <img src="/logo/cpc.png" alt="Ваше изображение" style={{ height: '80px'}}/>
             </IconButton> */}
             <IconButton aria-label="add" className="icon">
-              <img src="/logo/logonew2.png" alt="Ваше изображение" style={{ height: '80px'}}/>
+              <img src="/logo/cpcNew.png" alt="Ваше изображение" style={{ height: '40px'}}/>
             </IconButton>
           </div>
           <div className="left-buttons">

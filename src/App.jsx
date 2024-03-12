@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { fetchLogin } from "./store/reducers/auth";
 import { AddNewsPage } from "./pages/addNewsPage/AddNewsPage";
 import { AddProgramPage } from "./pages/addProgramPage/AddProgramPage";
+import { FaqPage } from "./pages/faqPage/FaqPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -64,6 +65,10 @@ function App() {
 			path: "/program/:id/edit",
 			//при клике редактирования мы передадим id и перейдем на урл edit и откроется то же окно как при создании
 			element: <AddProgramPage />,
+		},
+		{
+			path: "/faq",
+			element: <FaqPage />,
 		},
     // programm_id обычно получают из loader с помощью которого делают асинхронный запрос на сервер
 	]);

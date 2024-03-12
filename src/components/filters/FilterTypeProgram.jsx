@@ -8,7 +8,7 @@ import { setTypeProgram, cleanTypeProgram, cleanTypeKlimovProgram } from "../../
 
 const ICON = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const CHECKED_ICON = <CheckBoxIcon fontSize="small" />;
-const LIMIT_TAGS = 3;
+const LIMIT_TAGS = 1;
 const SELECT_ALL_TYPE_PROGRAMM = 9; 
 const selectTypeProgramDefault = ["технические направления и инженерия", 
                                   "гуманитарные и социальные",
