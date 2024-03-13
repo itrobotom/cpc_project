@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { CardProgram } from "../cardProgram/CardProgram"
 import { useSelector, useDispatch } from "react-redux";
 import { setTypeProgram, setTypeKlimovProgram } from "../../store/reducers/FilterPanelSlice"
+import { addFavorite } from "../../store/reducers/FavoriteProgramsSlice"
 
 import { fetchPrograms } from '../../store/reducers/programs';
 
@@ -31,8 +32,7 @@ const CatalogPrograms = () => {
 
     const { programs } = useSelector((state) => state.programs); // Все программы объектом
     const isLoadingPrograms = programs.status === 'loading';
-    console.log("Все программы ", programs);
-
+    //console.log("Все программы ", programs);
 
     const ageIntervalSlider = useSelector(state => state.valueFilters.ageRange);
     const inputName = useSelector(state => state.valueFilters.nameProgram);
@@ -41,7 +41,18 @@ const CatalogPrograms = () => {
     const isPassedTestKlimov = useSelector(state => state.valueFilters.isPassedTestKlimov);
     const selectTypeKlimov = useSelector(state => state.valueFilters.typeKlimov); 
     
+    //подписываемся на список Id избранных карточек программ в сторе (благодаря этому происходит перерндер при изменении массива избранных стора)
     const arrFavoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
+
+    useEffect(() => { //при первом рендере должны получить в хранилище из localStorage все id программ, находящихся в избранном
+        // Получить все ключи из localStorage (попадется еще пару левых значений, но они не помешают)
+        const keysFavoritesCard = Object.keys(localStorage);
+        // заносим их в редакс при обновлении страницы чтобы далее работать с ними
+        keysFavoritesCard.forEach((key) =>{
+            dispatch(addFavorite(key));
+        });
+        //console.log("Все ключи т.е. id избранных в localstorage", keysFavoritesCard);
+    }, []); // Пустой массив, указывающий, что этот эффект должен быть вызван только один раз
     
     const { data } = useSelector((state) => state.auth); //данные пользователя
 
@@ -49,7 +60,6 @@ const CatalogPrograms = () => {
     
     //выбираем программы по фильтрам, когда загрузились с сервера
     if(!isLoadingPrograms){
-        console.log("sagsdgsd", programs);
         catalogProgramListFilter = programs.items.filter((program) => {
             console.log(program);
             // проверяем, чтобы хотя бы одна одна из точек экстремума слайдера лежала внутри интервала для программы
@@ -105,6 +115,7 @@ const CatalogPrograms = () => {
         });
         const catalogProgramList = catalogProgramListFilter.map((program) => {
             const isFavoriteCardDefault = (arrFavoriteProgramsId.includes(program._id));  
+            //console.log(`Программа с id ${program._id} под названием ${program.titleProgram} находится в избранном `, isFavoriteCardDefault)
             return (
                 <div key={program._id}>
                     <CardProgram 

@@ -24,16 +24,6 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
     dispatсh(logout());
     window.localStorage.removeItem('token'); //удаляем токен из памяти браузера
   }
-  // клик на кнопку logout либо сотрет токен из куков
-  // function handleLogin() {
-  //   if(isLogin){ 
-  //     console.log('Удаляем токен!');
-  //     deleteTokenCookies(); //удаляем токен из куков
-  //     dispatch(deleteToken());
-  //     setIsLogin(!isLogin); //устанавливаем флаг как не авторизоавнный и сразу пройдет перерендер, отображаться теперь контент сайта не будет
-  //   }
-  //   console.log('После удаления токена вот такой флаг авторизации: ', isLogin); 
-  // }
 
   const handleReviewsClick = () => {
     const reviewsSection = document.getElementById('reviews');

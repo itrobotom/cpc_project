@@ -14,10 +14,20 @@ import { fetchRemoveProgram } from "../../store/reducers/programs";
 
 //карточка добавляется и удаляется как в сторе, так и в localstorage, чтобы отобразить изменения иконки избранного в обоих компоненетах
 
-function CardProgram({program, isFavoriteCardDefault, isEditable}) {
+function CardProgram( {program, isFavoriteCardDefault, isEditable} ) {
     const dispatch = useDispatch();
     const idCard = program._id; 
     //console.log('Внутри карты избранное', isFavoriteCardDefault);
+    const arrFavoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
+    const isFavoriteCardDefault2 = arrFavoriteProgramsId.includes(idCard);
+    console.log(`Карточка с программой ${program.titleProgram} находится в состоянии `, isFavoriteCardDefault2);
+    console.log("Массив id избранных программ ", arrFavoriteProgramsId);
+
+    
+
+
+
+
     const [isFavoriteCard, setIsFavoriteCard] = useState(isFavoriteCardDefault); //состояние избранного при первоначальном рендере isFavoriteCardDefault
     //console.log(`Карточка ${idCard} поменяла состояния избранности: `, isFavoriteCard)
     const handleFavoriteBtn = () => {
@@ -32,13 +42,13 @@ function CardProgram({program, isFavoriteCardDefault, isEditable}) {
             setIsFavoriteCard(!isFavoriteCard);   
         }
     }
-    const onClickRemove = () => {
-        confirm("Вы действительно хотите удалить программу") && dispatch(fetchRemoveProgram(idCard));
-    };
+    // const onClickRemove = () => {
+    //     confirm("Вы действительно хотите удалить программу") && dispatch(fetchRemoveProgram(idCard));
+    // };
     
     useEffect(() => { //ОБНОВЛЯЕМ ЛОКАЛЬНОЕ СОСТОЯНИЕ ИЗБРАННОГО ПРИ ЕГО СМЕНЕ (БЫЛА ПРОБЛЕМА, ПРИ КЛИКЕ ИКОНКИ КАРТОЧКА ИЗ ИЗБРАННЫХ УДАЛЯЛАСЬ, А НЕ ПЕРЕРИСОВЫВАЛАСЬ ИКОНКА В ОБЩЕМ СПИСКЕ ПРОГРАММ И ЗНАЧЕК ИЗБРАННОГО ОСТАВАЛСЯ)
-        setIsFavoriteCard(isFavoriteCardDefault);
-    }, [isFavoriteCardDefault]);
+        setIsFavoriteCard(isFavoriteCardDefault2);
+    }, [isFavoriteCardDefault2]);
 
     const heightCard = isEditable ? 610 : 560; //добавляем высоту для знчков удаления и редактирования 
     return (

@@ -26,8 +26,6 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
 import axiosBase from '../../axios';
-import { textAlign } from '@mui/system';
-
 
 export function DetailsProgram() {
     const [dataProgram, setDataProgram] = useState({});
@@ -60,10 +58,12 @@ export function DetailsProgram() {
     if(dataProgram && dataProgram.arrLinkImg){
         const lengthArrLinkImg = dataProgram.arrLinkImg.length;
         // console.log("sag", heightGalery)
-        if(lengthArrLinkImg > 9) heightGalery = 1300
-        else if(lengthArrLinkImg > 6) heightGalery = 900
-        else if(lengthArrLinkImg > 3) heightGalery = 600
-        else if(lengthArrLinkImg > 0) heightGalery = 300
+        if(lengthArrLinkImg > 10) heightGalery = 2800
+        else if(lengthArrLinkImg > 8) heightGalery = 2000
+        else if(lengthArrLinkImg > 6) heightGalery = 1600
+        else if(lengthArrLinkImg > 4) heightGalery = 1200
+        else if(lengthArrLinkImg > 2) heightGalery = 800
+        else if(lengthArrLinkImg > 0) heightGalery = 400
     }
     
     
@@ -93,50 +93,6 @@ export function DetailsProgram() {
                     <Box
                         sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'column', lg: 'row' }}} 
                     >
-                        {/* <Box
-                            sx={{
-                                position: isWideScreen ? 'fixed' : 'static',
-                                //width: "20rem",
-                                "@media(max-width: 50rem)": {
-                                position: "static",
-                                },
-                                //pl: "1rem",
-                                backgroundColor: 'white',
-                                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                                width: { xs: '100%', md: '420px' }, // Замените этот размер на желаемый
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                height: '100%', //вытягивает белый фон 
-                            }}
-                        > */}
-                            {/* <Box ml='10px' mt='10px' sx={{ display: 'flex'}}>
-                                <Typography 
-                                    ml='20px' color="#000000" variant="h4" gutterBottom
-                                >
-                                    {`${dataProgram.titleProgram}`}
-                                </Typography>
-                                <IconButton aria-label="add" 
-                                    sx = {{ mb: 2, mr: 3 }}
-                                    // onClick={handleFavoriteBtn}
-                                >
-                                    { isFavoriteCardDefault ? <ThumbUpIcon /> : <ThumbUpOffAltIcon /> }
-                                </IconButton>
-                            </Box> */}
-                            {/* <CardMedia
-                                component="img"
-                                sx={{ width: 350, height: 520, textAlign: "center", mb: "30px"}}
-                                image = { `http://localhost:5000${dataProgram.imageUrl}` }
-                                alt="img_program"
-                            />
-                            
-                        </Box> */}
-                        
-                        {/* <Box ml={isWideScreen ? '420px' : '0px'}  */}
-                        {/* <Box ml={isWideScreen ? '80px' : '0px'} 
-                            mt='10px' 
-                            pl='10px'
-                        > */}
                         <Box 
                             ml='auto' 
                             mr='auto'
@@ -357,7 +313,7 @@ export function DetailsProgram() {
                                     >
                                         Галерея
                                     </Typography>
-                                    <ImageList sx={{ width: 1200, height: heightGalery }} cols={3} rowHeight={164}>
+                                    <ImageList sx={{ width: 1200, height: heightGalery }} cols={2} rowHeight={164}>
                                         {dataProgram.arrLinkImg.map((item) => (
                                             <ImageListItem key={item}>
                                             <img

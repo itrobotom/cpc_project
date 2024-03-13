@@ -1,4 +1,4 @@
-import { Chip, Box, Autocomplete, TextField, Checkbox, CircularProgress, } from "@mui/material";
+import { Chip, Box, Autocomplete, TextField, Checkbox } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { styled } from "@mui/system";
@@ -28,7 +28,7 @@ const GreenAutocomplete = styled(Autocomplete)({
     },
 });                
 function FilterTypeProgramm() {
-  //СДЕЛАТЬ ТАК, ЧТО ЕЛСИ НЕ ВЫБРАНО НИ ОДНОГО ВИДА, ТО ИЩЕТСЯ ПО ВСЕМ ВИДАМ, А ЕЛСИ ХОТЯ БЫ ОДИН ВЫБРАН, ТО УЖЕ ПО ЭТОМУ ПЕРЕЧНЮ, МОЖНО И ВТОРОЙ ДОБАВИТЬ
+  //СДЕЛАНО ТАК, ЧТО ЕЛСИ НЕ ВЫБРАНО НИ ОДНОГО ВИДА, ТО ИЩЕТСЯ ПО ВСЕМ ВИДАМ, А ЕЛСИ ХОТЯ БЫ ОДИН ВЫБРАН, ТО УЖЕ ПО ЭТОМУ ПЕРЕЧНЮ, МОЖНО И ВТОРОЙ ДОБАВИТЬ
   //если стейт типов (массив) пустой, то делаем ресет фильтров или записываем все жанры в наш стор для поиска
   //иначе сначала чистим стор полностью, а затем добавляем выбранные жанры 
   const dispatch = useDispatch();
