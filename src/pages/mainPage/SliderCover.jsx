@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { React, useState, useEffect } from 'react';
-import { Box, Typography, } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const imagePaths = [
     "media/main/main2.jpg",
     "media/main/main3.jpg",
-    "media/main/main16.jpg",
+    // "media/main/main16.jpg",
     "media/main/main15.jpg",
     "media/main/main44.jpg",
     "media/main/main55.jpg",
@@ -20,7 +20,8 @@ const imagePaths = [
 ];
 
 const SliderCover = () => {
-    
+    const isMobile = useMediaQuery('(max-width:600px)');
+
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [opacity, setOpacity] = useState(1);
 
@@ -85,11 +86,11 @@ const SliderCover = () => {
                     zIndex: 1,
                 }}
             >
-                <Typography variant="h3" gutterBottom>
+                <Typography variant={isMobile ? "h4" : "h3"} gutterBottom>
                     Выбери правильную траекторию развития ребенка
                 </Typography>
                 <Typography variant="h5" gutterBottom>
-                    Пройти тест и выбрать по интересам, навыкам образовательную программу
+                    Пройди тест и выбери по интересам, навыкам образовательную программу
                 </Typography>
                 <button className='custom-button' onClick={()=> navigate("/learn")}>
                     Записаться

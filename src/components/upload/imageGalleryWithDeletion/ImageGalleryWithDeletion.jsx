@@ -4,6 +4,8 @@ import axiosBase from '../../../axios';
 import DeleteIcon from '@mui/icons-material/Clear';
 import { IconButton, Box } from "@mui/material";
 
+import { baseUrlApi } from '../../constants';
+
 const ImageGalleryWithDeletion = ({ imageUrls, setArrLinkImg }) => {
     const handleDelete = async (imageUrl) => {
         try {
@@ -38,7 +40,7 @@ const ImageGalleryWithDeletion = ({ imageUrls, setArrLinkImg }) => {
             {imageUrls.map((imageUrl, index) => (
                 <Box key={index} sx={{marginRight: "3rem"}}>  
                     <Box position="relative" display="inline-block">
-                        <img className="image-width" src={`http://localhost:5000${imageUrl}`} alt="Uploaded" />
+                        <img className="image-width" src={`${baseUrlApi}${imageUrl}`} alt="Uploaded" />
                         <IconButton 
                             onClick={() => handleDelete(imageUrl)} 
                             style={{ 

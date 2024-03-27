@@ -39,10 +39,11 @@ const programsSlice = createSlice({
             state.programs.items = action.payload;
             state.programs.status = 'loaded';
         },
-        [fetchPrograms.rejected]: (state) => {          //при ошибке данные очищаются 
+        [fetchPrograms.rejected]: (state, action) => {
             state.programs.items = [];
             state.programs.status = 'error';
-        },    
+            state.error = action.error.message; // Записываем сообщение об ошибке в состояние Redux
+        } 
     }
 });
 

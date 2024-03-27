@@ -2,19 +2,13 @@
 // import { fetchNews } from "../../store/reducers/news.js";
 
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { ImageList, ImageListItem, Table, TableBody, TableCell, TableContainer, TableRow, Paper, useMediaQuery, useTheme } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVk } from '@fortawesome/free-brands-svg-icons';
 
-import { useMediaQuery } from '@mui/material';
 import { Box, Typography, IconButton, Link, Stack, LinearProgress, Button } from "@mui/material";
 import "../detailsProgram/DetailsProgram.css"
 
@@ -22,8 +16,9 @@ import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { ImageSlider } from '../imageSlider/ImageSlider';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import { baseUrlApi } from '../constants';
+
+import { PopupConsultation } from "../popupConsultation/PopupConsultation.jsx"
 
 import axiosBase from '../../axios';
 
@@ -33,10 +28,19 @@ export function DetailsProgram() {
     const { programm_id } = useParams(); 
     const isEditingProgram = Boolean(programm_id); //то есть если есть id, значит флаг isEditingProgram в true
     //console.log("Вот id открытой программы", programm_id); 
+
     const dispatch = useDispatch();
     const { data } = useSelector((state) => state.auth); // Данные пользователя (для проверки авторизации)
     const PERCENT_LEFT_COLUMN = 40;
     const PERCENT_RIGHT_COLUMN = 60;
+
+    const [isPopupVisible, setPopupVisible] = useState(false);//открытие окна записи к специалистам
+    const handleOpenPopup = () => {
+        setPopupVisible(true);
+    };
+    const handleClosePopup = () => {
+        setPopupVisible(false);
+    };
     
     useEffect(() => {
         // Запрашиваем нужную программу по id
@@ -49,7 +53,7 @@ export function DetailsProgram() {
             })
             .catch((err) => {
                 console.warn(err);
-                alert("Ошибка при получении статьи");
+                alert("Ошибка при получении программы");
             })
     }, []); // Запускаем запрос при изменении статуса аутентификации
     
@@ -90,6 +94,7 @@ export function DetailsProgram() {
                 </Box>
             ) : (
                 <>
+                    {isPopupVisible && <PopupConsultation isOpenPopupClick={ true } onClose={ handleClosePopup }/>}
                     <Box
                         sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'column', lg: 'row' }}} 
                     >
@@ -101,7 +106,8 @@ export function DetailsProgram() {
                         >
                             
                             <Box >
-                                {isEditingProgram && (
+                                {/* проверим если авторизован то покажем кнопку редактировать программу */}
+                                {(data !== undefined && data !== null) && (
                                     <Box sx={{display: "flex", justifyContent: "end"}}>
                                         <Button 
                                             variant="outlined" 
@@ -212,7 +218,7 @@ export function DetailsProgram() {
                                         <TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Скачать программу: </TableCell>
                                             <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>
-                                                <Link href={`http://localhost:5000${dataProgram.fileUrl}`} target="_blank" rel="noopener noreferrer">
+                                                <Link href={`${baseUrlApi}${dataProgram.fileUrl}`} target="_blank" rel="noopener noreferrer">
                                                     текст программы
                                                 </Link>
                                             </TableCell>
@@ -226,9 +232,15 @@ export function DetailsProgram() {
                                                 Пройти тест 
                                                 </Link> 
                                                 {' '}Климова на профориентацию или{' '}
-                                                <Link href="#" target="_blank" rel="noopener noreferrer">
+                                                {/* <Link href="#" target="_blank" rel="noopener noreferrer">
                                                 записаться 
-                                                </Link> 
+                                                </Link>  */}
+                                                <Button
+                                                    onClick={handleOpenPopup}
+                                                    // color="success"
+                                                >
+                                                    записаться
+                                                </Button>
                                                 {' '}на проф консультацию к специалистам нашего центра
                                             </TableCell>
                                         </TableRow>
@@ -306,9 +318,11 @@ export function DetailsProgram() {
                                 </TableContainer>
                                 {dataProgram.arrLinkImg.length > 0 && 
                                 (<Box style={{ margin: "0 auto", maxWidth: 1200 }}>
-                                    <Typography sx={{
-                                        fontSize: '18px',
-                                        textAlign: 'center',
+                                    <Typography 
+                                        sx={{
+                                            fontSize: '22px',
+                                            textAlign: 'center',
+                                            fontWeight: 'bold',
                                         }}
                                     >
                                         Галерея
@@ -318,7 +332,7 @@ export function DetailsProgram() {
                                             <ImageListItem key={item}>
                                             <img
                                                 //srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`http://localhost:5000${item}`}
+                                                src={`${baseUrlApi}${item}`}
                                                 //alt={item.title}
                                                 loading="lazy"
                                             />

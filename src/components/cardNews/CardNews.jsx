@@ -52,7 +52,7 @@ export const CardNews = ({
           </IconButton>
         </Box>
       )}
-      <Typography ml='0px' color="#000000" variant="h4" gutterBottom>{title}</Typography>
+      <Typography ml='0px' color="#000000" variant="h5" style={{ fontWeight: 'bold' }} gutterBottom>{title}</Typography>
       {imageUrl && (
         <CardMedia
           component="img"

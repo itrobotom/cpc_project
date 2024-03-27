@@ -3,6 +3,9 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import MenuIcon from '@mui/icons-material/Menu';
+
+import { React, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVk } from '@fortawesome/free-brands-svg-icons';
@@ -17,6 +20,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
 function HeaderMain() { //function Header({head, isLogin, setIsLogin})
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   const isLogin = Boolean(useSelector(state => state.auth.data)); 
   const dispatсh = useDispatch();
 
@@ -42,11 +52,13 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
       >
         <div className="header">
           <div className="center-logo">
+          <Link to={"/"}>
             <IconButton aria-label="add" className="icon">
-              <img src="/logo/cpcNew.png" alt="Ваше изображение" style={{ height: '40px'}}/>
+              <img src="/logo/cpcNew.png" alt="logo ЦПК" style={{ height: '40px'}}/>
             </IconButton>
+          </Link>
           </div>
-          <div className="left-buttons">
+          <div className={`left-buttons ${menuOpen ? 'open' : ''}`}>
             <Link to={"/"}>
               <button className="button-home">Главная</button>
             </Link>
@@ -59,9 +71,10 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
             <Link to={"/faq"}>
               <button className="button-home">Ответы на вопросы</button>
             </Link>
-            {/* <Link to={"/reviews"}> */}
+            <Link to={"/"}>
               <button className="button-home" onClick={handleReviewsClick}>Отзывы</button>
-            {/* </Link> */}
+            </Link>
+            
           </div>
           <div className="right-icons">
             <Box
@@ -112,6 +125,9 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
               }
             </IconButton>
           </div>
+          <IconButton onClick={toggleMenu} aria-label="menu">
+            <MenuIcon />
+          </IconButton>
         </div>
         <div className="separator"></div>
       </Box>

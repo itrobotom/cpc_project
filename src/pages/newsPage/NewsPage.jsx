@@ -1,4 +1,5 @@
 import Header from "../../components/header/Header.jsx"
+import HeaderMain from "../../components/headerMain/HeaderMain.jsx";
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, LinearProgress, Stack } from "@mui/material"; 
 
@@ -14,14 +15,14 @@ export function NewsPage() {
     
     return (
         <div>
-        <Header/>
+        <HeaderMain/>
         <Box
             sx={{
             width: "100%",
-            pt: "110px",
-            "@media screen and (max-width: 768px)": {
-                pt: "230px"
-            }
+            // pt: "110px",
+            // "@media screen and (max-width: 768px)": {
+            //     pt: "230px"
+            // }
             }}
         > 
             <FilterMainNews/>

@@ -1,55 +1,54 @@
 import { Box, Typography, Slider } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setYear } from "../../store/reducers/FilterNewsPanelSlice"
+import { setYear } from "../../store/reducers/FilterNewsPanelSlice";
+import moment from "moment";
 
 function FilterYear() {
-  const [maxYear, setMaxYear] = useState(2024);
-  const [minYear, setMinYear] = useState(2000); 
-  const dispath = useDispatch();
+  const [yearRange, setYearRange] = useState([1996, moment().year()]); // Используйте state для хранения диапазона годов
+  const dispatch = useDispatch();
 
-  //подписались на изменения в сторе через useSelector
+  // Подписались на изменения в сторе через useSelector
   const yearInterval = useSelector(state => state.valueFiltersNews.yearRange); 
-  console.log("значение стора с полем года публикации", yearInterval);
-  const handleChangeYears = (event) => {
-    setMaxYear(event.target.value[1]);
-    setMinYear(event.target.value[0]);
-    //записать новые данные в стор по интервалу года
-    dispath(setYear(event.target.value));
-  }
-  const valueYears = [minYear, maxYear];
+  console.log("Значение стора с полем года публикации", yearInterval);
+
+  const handleChangeYears = (_, newValues) => {
+    setYearRange(newValues);
+    // Записать новые данные в стор по интервалу года
+    dispatch(setYear(newValues));
+  };
+
+
+  useEffect(() => {
+    const currentYear = moment().year(); //получаем текущий год из библиотеки
+    setYearRange([1996, currentYear]); // Установите текущий год как максимальный год
+  }, []);
+
   const marks = [
     {
-      value: minYear,
-      label: minYear,
+      value: yearRange[0],
+      label: yearRange[0],
     },
     {
-      value: maxYear,
-      label: maxYear,
+      value: yearRange[1],
+      label: yearRange[1],
     },
   ];
-  useEffect(() => {
-    setMaxYear(yearInterval.max);
-    setMinYear(yearInterval.min);
-    //console.log('из юсэффекта', yearInterval);
-  }, [yearInterval])
+
   return (
     <Box sx={{ mt: 1 }}>
       <Typography variant="body1" sx={{ mt: "1rem" }}>
-        Хронология (2000-2024 лет):
+        Хронология ({yearRange[0]}-{yearRange[1]} лет):
       </Typography>
       <Box sx={{ m: "1rem 0.5rem 0rem 0.5rem" }}>
         <Slider
-          value={valueYears}
+          value={yearRange} // Передаем значения из состояния
           valueLabelDisplay="auto"
-          max={2024}
-          min={2000}
+          max={moment().year()} // Максимальный год будет текущим годом
+          min={1996}
           onChange={handleChangeYears}
-          // getAriaValueText={valueText}
+          step={1} // Шаг изменения
           marks={marks}
-          // step={2}
-          // size="small"
-          //color="success"
         />
       </Box>
     </Box>

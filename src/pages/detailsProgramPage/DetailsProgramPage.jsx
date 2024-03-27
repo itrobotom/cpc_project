@@ -4,6 +4,7 @@ import { DetailsProgram } from '../../components/detailsProgram/DetailsProgram';
 // import { useParams } from 'react-router-dom';
 import { useLoaderData } from "react-router-dom";
 import Header from "../../components/header/Header.jsx"
+import HeaderMain from '../../components/headerMain/HeaderMain.jsx';
 import Footer from "../../components/footer/Footer.jsx"
 
 export function DetailsProgramPage(props) {
@@ -19,11 +20,11 @@ export function DetailsProgramPage(props) {
 
   return(
     <div>
-      <Header/>
+      <HeaderMain/>
       <Box
-        sx={{
-          pt: "110px"
-        }}
+        // sx={{
+        //   pt: "110px"
+        // }}
       > 
         <DetailsProgram />
       </Box>

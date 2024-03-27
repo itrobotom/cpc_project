@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 function FilterMainNews() {
   //устанавливаем по умолчанию при запуске прлижения фильтры по умолчанию, поэтому диспатчим resetFilter
   const { news } = useSelector((state) => state.news); //все новости объектом
-  console.log("asdjskajfdklajfdkljsf", news);
+  // console.log("Все новости объектом", news);
   return (
     <Box
       sx={{
@@ -22,7 +22,7 @@ function FilterMainNews() {
         ml: "11rem", //отступ от левого края
         "@media(max-width: 50rem)": {
           position: "static",
-          ml: "4rem", //отступ от левого края
+          ml: "1rem", //отступ от левого края
         },
       }}
     >

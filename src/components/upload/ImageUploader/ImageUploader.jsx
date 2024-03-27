@@ -3,6 +3,7 @@ import axiosBase from '../../../axios';
 import { Button, Box, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Clear';
 import "./ImageUploader.css"
+import { baseUrlApi } from "../../constants.js"
 
 const SIZE_IMAGE_LIMIT = 1024 * 1024 * 1; //1 Мб
 const WIDTH_IMAGE_CONVERT = 1980;
@@ -84,7 +85,7 @@ const ImageUploader = ({ url, folder,  imageUrl, setImageUrl}) => {
                 axiosBase.post(`/${url}`, formData)
                     .then(response => {
                         console.log('Ссылка на загруженное на сервер изображение: ', response.data.url);
-                        console.log("ссылка и папка ", {url, folder})
+                        console.log("ссылка и папка ", {imageUrl, folder})
                         setImageUrl(response.data.url);
                     })
                     .catch(error => {
@@ -103,7 +104,7 @@ const ImageUploader = ({ url, folder,  imageUrl, setImageUrl}) => {
         {imageUrl ? (
              <>
                 <Box position="relative" display="inline-block">
-                    <img className="image-width" src={`http://localhost:5000${imageUrl}`} alt="Uploaded" />
+                    <img className="image-width" src={`${baseUrlApi}${imageUrl}`} alt="Uploaded" />
                     <IconButton 
                             onClick={handleRemoveFile} 
                             style={{ 

@@ -42,10 +42,11 @@ const AddInstructor = ({ instructors, setInstructors }) => {
                         style={{ width: '30%', margin: '10px' }} 
                     />
                     <TextField
-                        label="Почта"
+                        label="Почта (пропускаем заполнение)"
                         value={instructor.email || ''}
                         onChange={(event) => handleInputChange(event, index, 'email')}
                         style={{ width: '20%', margin: '10px' }} 
+                        disabled // Делает поле неактивным, пока почту не собираем
                     />
                     <TextField
                         label="ID аккаунта"

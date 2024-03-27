@@ -12,6 +12,8 @@ import { addFavorite, removeFavorite } from "../../store/reducers/FavoriteProgra
 import { useDispatch, useSelector } from "react-redux"; 
 import { fetchRemoveProgram } from "../../store/reducers/programs";
 
+import { baseUrlApi } from "../constants";
+
 //карточка добавляется и удаляется как в сторе, так и в localstorage, чтобы отобразить изменения иконки избранного в обоих компоненетах
 
 function CardProgram( {program, isFavoriteCardDefault, isEditable} ) {
@@ -73,7 +75,7 @@ function CardProgram( {program, isFavoriteCardDefault, isEditable} ) {
                     <CardMedia
                         component="img"
                         //height="140" //можно изменить высоту отображения изображения карточки, но тогда она будет урезана
-                        image = { `http://localhost:5000${program.imageUrl}`}
+                        image = { `${baseUrlApi}${program.imageUrl}`}
                         alt="img_program"
                     />
                 </Link>

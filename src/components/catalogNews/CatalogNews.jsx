@@ -6,6 +6,7 @@ import { Box, Typography, LinearProgress, Stack } from "@mui/material";
 import { CardNews } from "../../components/cardNews/CardNews.jsx"
 import NewsPagination from '../filterNews/newsPagination/NewsPagination.jsx';
 import dayjs from 'dayjs';
+import { baseUrlApi } from '../constants.js';
 
 export function CatalogNews() {
     const dispatch = useDispatch();
@@ -93,7 +94,7 @@ export function CatalogNews() {
                 pl: "37rem",
                 "@media(max-width: 50rem)": {
                     p: "0rem",
-                    ml: "5rem", 
+                    ml: "1rem", 
                     // pl: "10rem",
                 },
             }}
@@ -104,18 +105,18 @@ export function CatalogNews() {
                     
                     {isLoadingNews ? ( //грузим карточки только тогда, когда пришел ответ от сервера, а до - индикатор прогресса
                         <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: '100vh', // Задайте высоту вьюпорта
-                            width: '100%',
-                        }}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100vh', // Задайте высоту вьюпорта
+                                width: '100%',
+                            }}
                         >
-                        {/* <CircularProgress color="success"/> */}
-                        <Stack sx={{ width: '70%', color: 'grey.500' }} spacing={2}>
-                            <LinearProgress />
-                        </Stack>
+                            {/* <CircularProgress color="success"/> */}
+                            <Stack sx={{ width: '70%', color: 'grey.500' }} spacing={2}>
+                                <LinearProgress />
+                            </Stack>
                         </Box>
                     ) : (
                         <>
@@ -125,7 +126,7 @@ export function CatalogNews() {
                                         key={obj._id} // Add key prop for React list items
                                         id={obj._id}
                                         title={obj.title}
-                                        imageUrl={obj.imageUrl ? `http://localhost:5000${obj.imageUrl}` : ''}
+                                        imageUrl={obj.imageUrl ? `${baseUrlApi}${obj.imageUrl}` : ''}
                                         isEditable={data !== undefined && data !== null} // если данные есть, то авторизованы и значит можно удалять/редактировать
                                         textNews={obj.text}
                                         typesProgramStore={obj.typesProgramStore}

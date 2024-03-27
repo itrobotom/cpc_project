@@ -1,4 +1,4 @@
-import { Container, Typography, Button, Box, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
+import { Container, Typography, Button, Box, InputLabel, MenuItem, FormControl, Select, useMediaQuery } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
 
@@ -18,11 +18,13 @@ export const ContactTeacher = () => {
         }
     } 
 
+    const isMobile = useMediaQuery('(max-width:600px)');
+
     const handleChange = (event) => {
         setTitleProgram(event.target.value); //делаетсят олько для перерендера и отображения нового значения в выпадающем меню
         setAccountId(event.target.value);
         console.log("id чата", event.target.value);
-      };
+    };
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -48,8 +50,8 @@ export const ContactTeacher = () => {
                     Выберете интересующую образовательную программу, перейдите по ссылке в чат с педагогом и задайте свой вопрос. 
                 </Typography>
             </Box>
-            <Box style={{paddingBottom: "20px", display: "flex", justifyContent: "start" }}>
-                <Box sx={{ width: 800 }}>
+            <Box style={{paddingBottom: "20px", display: "flex", justifyContent: "center" }}>
+                <Box sx={{ flex: 1, marginRight: "20px", maxWidth: isMobile ? 300 : 800 }}> {/* Используем flex-grow и maxWidth */}
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Образовательная программа</InputLabel>
                         <Select
@@ -58,6 +60,7 @@ export const ContactTeacher = () => {
                             value={titleProgram}
                             label="Образовательная программа"
                             onChange={handleChange}
+                            sx={{ minWidth: 200 }} // Минимальная ширина, чтобы предотвратить слишком сильное сжатие
                         >
                             {programs.items.map((program) => (
                                 <MenuItem key={program.id} value={program.instructors[0].accountId}>
@@ -70,7 +73,6 @@ export const ContactTeacher = () => {
                 <Button 
                     variant="outlined"
                     onClick={handleClickChat}
-                    sx={{marginLeft: "20px"}}
                 >
                     Перейти в чат
                 </Button>

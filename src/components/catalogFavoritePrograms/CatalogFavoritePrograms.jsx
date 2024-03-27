@@ -38,28 +38,29 @@ const CatalogFavoritePrograms = () => {
     return (countCardsFavorite > 0 ? (
         <>
             <Typography
-                    sx={{
-                        m: "0rem 0rem 1rem 26.5rem",
-                        color: "grey",
-                        fontSize: "1.15rem",
-                        "@media(max-width: 50rem)": {
-                            ml: "0rem",
-                        },
-                    }}
-                >
-                    Подборка избранных программ
-                </Typography>
+                sx={{
+                    m: "0rem 0rem 1rem 26.5rem",
+                    color: "grey",
+                    fontSize: "1.15rem",
+                    "@media(max-width: 50rem)": {
+                        ml: "0rem",
+                    },
+                }}
+            >
+                Подборка избранных программ
+            </Typography>
             <Box
-            sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "start",
-                alignContent: "flex-start",
-                pl: "26.5rem",
-                "@media(max-width: 50rem)": {
-                p: "0rem",
-                },
-            }}
+                sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "start",
+                    alignContent: "flex-start",
+                    pl: "26.5rem",
+                    "@media(max-width: 50rem)": {
+                        p: "0rem",
+                        ml: "2rem"
+                    },
+                }}
             >
                 
                 {catalogProgramListFavorite}

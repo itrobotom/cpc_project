@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, LinearProgress, Stack, CircularProgress  } from "@mui/material";
 import { CardProgram } from "../cardProgram/CardProgram"
 import { useSelector, useDispatch } from "react-redux";
 import { setTypeProgram, setTypeKlimovProgram } from "../../store/reducers/FilterPanelSlice"
@@ -26,14 +26,38 @@ const NUM_TYPES_KLIMOV = selectTypeKlkimovProgramDefault.length;
 const CatalogPrograms = () => {
     const dispatch = useDispatch();
     
+    
+    //ВАРИАНТ ВРЕМЕННЫЙ ДЛЯ ПРОВЕРКИ БЕЗ AXIOS
+    // const [programs, setPrograms] = useState([]);
+    // useEffect(() => {
+    //     async function fetchPrograms2() {
+    //         try {
+    //             const response = await fetch('https://info.cpc.tomsk.ru:5000/programs');
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             const data = await response.json();
+    //             setPrograms(data);
+    //             console.log("Все программы объектом", data);
+    //         } catch (error) {
+    //             console.error('Error fetching programs:', error);
+    //         }
+    //     }
+    //     fetchPrograms2();
+    // }, []); // Run only once on component mount
+    // const isLoadingPrograms = true;
+
+    
     useEffect(() => {
         dispatch(fetchPrograms());
     }, []); // Запускаем запрос при изменении статуса аутентификации
-
     const { programs } = useSelector((state) => state.programs); // Все программы объектом
     const isLoadingPrograms = programs.status === 'loading';
-    //console.log("Все программы ", programs);
 
+    console.log("Все программы ", programs);
+
+
+    
     const ageIntervalSlider = useSelector(state => state.valueFilters.ageRange);
     const inputName = useSelector(state => state.valueFilters.nameProgram);
     const typesProgramStore = useSelector(state => state.valueFilters.type);
@@ -43,20 +67,12 @@ const CatalogPrograms = () => {
     
     //подписываемся на список Id избранных карточек программ в сторе (благодаря этому происходит перерндер при изменении массива избранных стора)
     const arrFavoriteProgramsId = useSelector(state => state.favoritePrograms.arrIdFavoritePrograms);
-
-    useEffect(() => { //при первом рендере должны получить в хранилище из localStorage все id программ, находящихся в избранном
-        // Получить все ключи из localStorage (попадется еще пару левых значений, но они не помешают)
-        const keysFavoritesCard = Object.keys(localStorage);
-        // заносим их в редакс при обновлении страницы чтобы далее работать с ними
-        keysFavoritesCard.forEach((key) =>{
-            dispatch(addFavorite(key));
-        });
-        //console.log("Все ключи т.е. id избранных в localstorage", keysFavoritesCard);
-    }, []); // Пустой массив, указывающий, что этот эффект должен быть вызван только один раз
+    //!!!!!В РЕДАКСЕ FavoriteProgramSlice.js есть получение id программы из localStorage как ранее сохраненные программы
     
     const { data } = useSelector((state) => state.auth); //данные пользователя
 
     let catalogProgramListFilter;
+    let catalogProgramList; 
     
     //выбираем программы по фильтрам, когда загрузились с сервера
     if(!isLoadingPrograms){
@@ -113,7 +129,7 @@ const CatalogPrograms = () => {
                 return program;
             }
         });
-        const catalogProgramList = catalogProgramListFilter.map((program) => {
+        catalogProgramList = catalogProgramListFilter.map((program) => {
             const isFavoriteCardDefault = (arrFavoriteProgramsId.includes(program._id));  
             //console.log(`Программа с id ${program._id} под названием ${program.titleProgram} находится в избранном `, isFavoriteCardDefault)
             return (
@@ -126,8 +142,11 @@ const CatalogPrograms = () => {
                 </div>
             )
         });
-        return (catalogProgramListFilter.length > 0 ? (
-            <Box
+
+    }
+    return (
+        <>
+        <Box
             sx={{
                 display: "flex",
                 flexWrap: "wrap",
@@ -142,44 +161,48 @@ const CatalogPrograms = () => {
                     ml: "2rem"
                 },
             }}
-            >
-                {catalogProgramList}
-            </Box>
-        ) : (
-            <Box
-            sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "start",
-                alignContent: "flex-start",
-                // расстояние между карточками
-                // gap: "0rem", 
-                // расстояние для пространства блока с фильтрами
-                pl: "26.5rem",
-                "@media(max-width: 50rem)": {
-                    p: "0rem",
-                    ml: "2rem"
-                },
-            }}
-            >
-                <Typography
+        >
+            {isLoadingPrograms ? (
+                <Box
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: '100vh', // Задайте высоту вьюпорта
                         width: '100%',
-                        color: "grey",
-                        fontSize: "1.15rem",
                     }}
                 >
-                    Программы по заданным параметрам поиска отсутсвуют
-                </Typography>
-            </Box>   
-            )
-        )
-    }
-  
+                    {/* <CircularProgress color="success"/> */}
+                    <Stack sx={{ width: '70%', color: 'grey.500' }} spacing={2}>
+                        <LinearProgress />
+                    </Stack>
+                </Box>
+            ) : (
+                <>
+                {catalogProgramListFilter.length > 0 ? 
+                    (catalogProgramList) :
+                    (
+                        <Typography
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100vh', // Задайте высоту вьюпорта
+                                width: '100%',
+                                color: "grey",
+                                fontSize: "1.15rem",
+                            }}
+                        >
+                            Программы по заданным параметрам поиска отсутсвуют
+                        </Typography>
+                    )}
+                </>
+            )}
+            </Box>
+        </>
+    )
 }
+  
+
 
 export { CatalogPrograms }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardMedia from '@mui/material/CardMedia';
 import Fade from '@mui/material/Fade';
+import { baseUrlApi } from '../constants';
 
 const TIME_ANIMATION_MS = 500; //пауза перехода 
 const TIME_SLIDE_MS = 3000; //пауза при пролистывании изображений 
@@ -28,7 +29,7 @@ const ImageSlider = ({ arr_img_url }) => {
       <CardMedia
         component="img"
         sx={{ width: '95%', m: 0, ml: 2, height: '400px', minWidth: '50%' }}
-        image={`http://localhost:5000${arr_img_url[currentPhotoIndex]}`} // Используем текущий индекс для получения URL из массива
+        image={`${baseUrlApi}${arr_img_url[currentPhotoIndex]}`} // Используем текущий индекс для получения URL из массива
         alt={`photo_${currentPhotoIndex}`} // В качестве альтернативного текста используем индекс
       />
     </Fade>
