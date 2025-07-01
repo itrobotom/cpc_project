@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import axiosBase from '../../axios';
 import { FormNews } from './FormNews';
+import { baseUrlApi } from '../../components/constants';
 
 import HeaderMain from '../../components/headerMain/HeaderMain';
 import 'easymde/dist/easymde.min.css';
@@ -127,7 +128,7 @@ export const AddNewsPage = () => {
               Удалить
             </Button>
             <Box mt={2}>
-              <img className="image-poster" src={`http://localhost:5000${imageUrl}`} alt="Uploaded" />
+              <img className="image-poster" src={`${baseUrlApi}${imageUrl}`} alt="Uploaded" />
             </Box>
           </>
           

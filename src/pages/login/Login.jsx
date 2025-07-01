@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField, Typography, Button, Box, Paper } from "@mui/material";
 import Header from "../../components/header/Header.jsx"
+import HeaderMain from "../../components/headerMain/HeaderMain.jsx";
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'; 
 import { Navigate } from 'react-router-dom'
@@ -18,13 +19,14 @@ export function Login() {
         setError,
         formState: { errors, isValid },
     } = useForm({
-        defaultValues: {
-            email: '222222@mail.ru',
-            password: '111111',
-        },
+        // defaultValues: {
+        //     email: '222222@mail.ru',
+        //     password: '111111',
+        // },
         //если не ставить режим, то пока не будет попытки отправить пустые поля, красным выделяться не будет
         //mode: 'onChange', //валидация происходит только если начали писать в форме (происходили какие-либо изменения)
     })
+    // Значение values в функции onSubmit передается автоматически библиотекой react-hook-form
     const onSubmit = async (values) => {
         console.log('То, что передаем на сервер для авторизации', values);
         const data = await dispatch(fetchGetToken(values)); 
@@ -42,7 +44,8 @@ export function Login() {
 
     return (
         <>
-            <Header/>
+            {/* <Header/> */}
+            <HeaderMain/>
             <Box className="position">
                 <Paper className="root" >
                     <Typography className="root-text" variant="h5" >
@@ -69,13 +72,12 @@ export function Login() {
                             { ...register('password', { required: 'укажите пароль' })}
                             fullWidth 
                         />
-                        <Button type="submit" size="large" variant="contained" color="success" fullWidth>
+                        <Button type="submit" size="large" variant="contained" fullWidth>
                             Войти
                         </Button>
                     </form>
                 </Paper>
             </Box>
-        
         </>
     );
 };

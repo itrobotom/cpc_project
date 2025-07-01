@@ -19,6 +19,9 @@ function Footer() {
       <Typography variant="body1" gutterBottom>
         Email: cpc@education70.ru
       </Typography>
+      <Typography variant="body1" gutterBottom>
+        Тех. поддержка: <a href="https://t.me/itrobotom">telegram</a> 
+      </Typography>
 
       <Grid container spacing={2} justifyContent="center" mt={1}>
         <Grid item>
@@ -44,7 +47,7 @@ function Footer() {
         </Grid>
       </Grid>
       <Typography variant="body2" mt={1}>
-        © Copyright 2024
+        © Copyright 2024-2025
       </Typography>
     </Box>
   );

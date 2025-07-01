@@ -52,11 +52,11 @@ function HeaderMain() { //function Header({head, isLogin, setIsLogin})
       >
         <div className="header">
           <div className="center-logo">
-          <Link to={"/"}>
-            <IconButton aria-label="add" className="icon">
-              <img src="/logo/cpcNew.png" alt="logo ЦПК" style={{ height: '40px'}}/>
-            </IconButton>
-          </Link>
+            <Link to={"/"}>
+              <IconButton aria-label="add" className="icon">
+                <img src="/logo/cpcNew.png" alt="logo ЦПК" style={{ height: '40px'}}/>
+              </IconButton>
+            </Link>
           </div>
           <div className={`left-buttons ${menuOpen ? 'open' : ''}`}>
             <Link to={"/"}>

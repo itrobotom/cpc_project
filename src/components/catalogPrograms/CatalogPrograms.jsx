@@ -24,8 +24,7 @@ const selectTypeKlkimovProgramDefault = ["человек-природа",
 const NUM_TYPES = selectTypeProgramDefault.length;
 const NUM_TYPES_KLIMOV = selectTypeKlkimovProgramDefault.length;
 const CatalogPrograms = () => {
-    const dispatch = useDispatch();
-    
+    const dispatch = useDispatch(); 
     
     //ВАРИАНТ ВРЕМЕННЫЙ ДЛЯ ПРОВЕРКИ БЕЗ AXIOS
     // const [programs, setPrograms] = useState([]);
@@ -46,7 +45,6 @@ const CatalogPrograms = () => {
     //     fetchPrograms2();
     // }, []); // Run only once on component mount
     // const isLoadingPrograms = true;
-
     
     useEffect(() => {
         dispatch(fetchPrograms());
@@ -56,8 +54,6 @@ const CatalogPrograms = () => {
 
     console.log("Все программы ", programs);
 
-
-    
     const ageIntervalSlider = useSelector(state => state.valueFilters.ageRange);
     const inputName = useSelector(state => state.valueFilters.nameProgram);
     const typesProgramStore = useSelector(state => state.valueFilters.type);

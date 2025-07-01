@@ -61,10 +61,18 @@ const FaqContainer = () => {
                     <a href="https://cpc.tomsk.ru/nashi-sotrudniki/trofimova/" target="_blank" rel="noopener noreferrer">
                         Трофимовой Анны Александровны
                     </a> 
+                    , {' '}
+                    <a href="https://cpc.tomsk.ru/nashi-sotrudniki/dil-sofya-viktorovna/" target="_blank" rel="noopener noreferrer">
+                            Шутовой Софьи Викторовны
+                    </a> 
+                    , {' '}
+                    <a href="https://cpc.tomsk.ru/nashi-sotrudniki/basurmanova-olga-aleksandrovna-2/" target="_blank" rel="noopener noreferrer">
+                            Драницы Ольги Александровны
+                    </a> 
                     . {' '}
                     С 11 лет доступно тестирование для определения приоритетных интересов ребенка. Перейдите по ссылке “каталог услуг ЦПК” и откройте слева в панели фильтров “инструкция”.
                     Если ребенок уже посещал занятия в центре, рекомендуем обратиться к педагогу за консультацией в Сферум. Контактные данные педагогов, закрепленных за программами приведены ниже в таблице.
-                    Если вы записываете ребенка впервые, рекоммендуется пройти {' '}
+                    {' '}
                 </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -79,7 +87,7 @@ const FaqContainer = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                 <Typography>
-                    Занятия начинаются с 12 сентября. С собой сменная обувь. Документы на зачисление педагоги раздадут детям на занятии.
+                    Занятия начинаются с сентября. С собой сменная обувь. Документы на зачисление педагоги раздадут детям на занятии.
                 </Typography>
                 </AccordionDetails>
             </Accordion>

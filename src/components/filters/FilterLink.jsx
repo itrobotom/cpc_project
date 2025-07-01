@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Link } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 function FilterLink() {
@@ -13,34 +13,45 @@ function FilterLink() {
             mt: 1,
         }}
       >
-        <Typography 
+        {/* <Typography 
         variant="h6"
         sx={{
             mb: 1,
         }}
         >
             Записаться на программу
-        </Typography>
-        <Button 
-            onClick={() => {
-                alert('clicked');
-            }}
-            variant="contained" 
-            // color="success" 
-            endIcon={<SendIcon />}
-            sx={{
-              // color: "#fff",
-              // backgroundColor: "#4CAF50", // Цвет кнопки
-              "&:hover": {
-                // backgroundColor: "#45a049", // Цвет кнопки при наведении
-                boxShadow: "0 8px 16px rgba(0,0,0,0.2)", // Тень кнопки при наведении
-                transform: "scale(1.1)", // Увеличение размера при наведении
-                transition: "transform 0.3s ease-in-out" // Анимация увеличения
-              },
-            }}
+        </Typography> */}
+        <Link 
+            href="https://reg.cpc.tomsk.ru/" 
+            target="_blank" 
+            rel="noopener noreferrer"
         >
-            ЗАПИСАТЬСЯ
-        </Button>
+            <Button 
+                variant="contained" 
+                endIcon={<SendIcon />}
+                sx={{
+                    animation: 'pulse 2s infinite',
+                    "&:hover": {
+                        boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+                        transform: "scale(1.1)",
+                        transition: "transform 0.3s ease-in-out"
+                    },
+                    "@keyframes pulse": {
+                        "0%": {
+                            transform: "scale(1)",
+                        },
+                        "50%": {
+                            transform: "scale(1.1)",
+                        },
+                        "100%": {
+                            transform: "scale(1)",
+                        },
+                    },
+                }}
+            >
+                ЗАПИСАТЬСЯ
+            </Button>
+        </Link>
       </Box>
     );
   }

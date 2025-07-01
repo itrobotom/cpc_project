@@ -24,7 +24,7 @@ function FiltersReset() {
     >
       <Button 
         onClick={handleResetFilter}
-        variant="outlined" color="error"
+        variant="outlined" color="primary"
       >
         Сброс фильтров
       </Button>

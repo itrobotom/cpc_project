@@ -3,7 +3,7 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from 'react-redux'; 
 import { fetchRemoveNews } from '../../store/reducers/news';
-import { Box, Typography, IconButton, CardMedia, Link, Button } from "@mui/material";
+import { Box, Typography, IconButton, CardMedia, Link, Button, Skeleton, Fade } from "@mui/material";
 import dayjs from 'dayjs';
 
 import Markdown from 'react-markdown'
@@ -32,6 +32,37 @@ export const CardNews = ({
     confirm("Вы действительно хотите удалить новость") && dispatch(fetchRemoveNews(id));
   };
 
+  //отслеживание загрузки изображения в браузере (не с сервера)
+  const [loadedImg, setLoadedImg] = useState(false);
+  //уменьшаем изображение, если оно вериткальное 
+  const [imageWidth, setImageWidth] = useState("100%");
+  const handleImageLoad = (event) => {
+    setLoadedImg(true);
+    const { naturalWidth, naturalHeight } = event.target;
+    if (naturalHeight > naturalWidth) {
+      setImageWidth("50%"); // Если изображение вертикальное, делаем 50% ширины текста
+    } else {
+      setImageWidth("100%"); // Обычная ширина
+    }
+  };
+
+
+  // Проверяем, загружено ли изображение
+  useEffect(() => {
+    if (!imageUrl) return;
+
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => {
+      setLoadedImg(true);
+      if (img.naturalHeight > img.naturalWidth) {
+        setImageWidth("50%");
+      } else {
+        setImageWidth("100%");
+      }
+    };
+  }, [imageUrl]);
+
   const [isLongText, setIsLongText] = useState(false);
   useEffect(() => {
     setIsLongText(textNews.length > MIN_SYMBOL_COUNT); // Предположим, что длинный текст имеет более 100 символов
@@ -54,11 +85,20 @@ export const CardNews = ({
       )}
       <Typography ml='0px' color="#000000" variant="h5" style={{ fontWeight: 'bold' }} gutterBottom>{title}</Typography>
       {imageUrl && (
-        <CardMedia
-          component="img"
-          alt={title}
-          src={imageUrl}
-        />
+        <>
+          {!loadedImg && <Skeleton variant="rectangular" width="100%" height={300} />} 
+          {loadedImg && (
+            <Fade in={loadedImg} timeout={500}>
+              <CardMedia
+                component="img"
+                alt={title}
+                src={imageUrl}
+                onLoad={handleImageLoad} 
+                sx={{ width: imageWidth, display: "block", margin: "0 auto" }} 
+              />
+            </Fade>
+          )}
+        </>
       )}
       <div>
         <Typography 

@@ -101,7 +101,7 @@ export const AddProgramPage = () => {
           ? await axiosBase.patch(`/program/${id}`, allDataProgram) : await axiosBase.post('/program', allDataProgram); 
           const _id = isEditingProgram ? id : data._id; //записываем в _id то же самое значение, если редактируем, 
                                                  //а иначе получаем новый от сервера, если программа создается с нуля
-          navigate(`/learn/description_programm/${_id}`); // перейти на страницу созданной или сохраненной программы 
+          navigate(`/description_programm/${_id}`); // перейти на страницу созданной или сохраненной программы 
       }
     } catch (err){
       console.warn(err); 
@@ -112,7 +112,7 @@ export const AddProgramPage = () => {
   useEffect(() => { // после рендера страницы сразу проверим наличие id, и если он есть - значит происходит редактирование статьи и заполним поля формы данными
     if(isEditingProgram) {
       axiosBase.get(`/programs/${id}`).then(({data}) => {
-        //console.log("данные для заполнения полей ", data);
+        console.log("данные для заполнения полей (программа редактируется) ", data);
 
         setTypesProgramKlimov(data.typesProgramKlimov);
         setTypesProgram(data.typesProgram);
@@ -124,9 +124,9 @@ export const AddProgramPage = () => {
         setCommentVideo(data.commentVideo);
         setLinkGroup(data.linkGroup);
         setCommentProgram(data.commentProgram);
-        setIsBudgetProgramm(data.isBudgetProgramm);
-        setAgeRangeProgram(data.ageRangeProgram);
-        setNumberStudents(data.numberStudents);
+        setIsBudgetProgramm(data.isBudgetProgramm); 
+        setAgeRangeProgram(data.ageRangeProgram);   //!!!!
+        setNumberStudents(data.numberStudents);     //!!!!!
         setInstructors(data.instructors);
         setTextProgram(data.textProgram);
         setImageUrl(data.imageUrl);

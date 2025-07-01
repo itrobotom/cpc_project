@@ -12,10 +12,30 @@ function FilterMainNews() {
   //устанавливаем по умолчанию при запуске прлижения фильтры по умолчанию, поэтому диспатчим resetFilter
   const { news } = useSelector((state) => state.news); //все новости объектом
   // console.log("Все новости объектом", news);
+  // Состояние для отслеживания скролла
+  const [marginTop, setMarginTop] = useState("7rem");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+          setMarginTop("1rem"); // Убираем отступ при скролле
+      } else {
+        setMarginTop("7rem"); // Возвращаем отступ, если в самом верху
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <Box
       sx={{
         position: "fixed",
+        top: marginTop, // Вместо `mt`, так как `fixed` не реагирует на `margin`
+        "@media(max-width: 50rem)": {
+          position: "static",
+          top: marginTop, // Только если `static`, то `margin` работает
+        },
         width: "20rem",
         pl: "1rem",
         mb: "2rem",

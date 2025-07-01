@@ -15,6 +15,11 @@ const NumbersStudent=( {numberStudents, setNumberStudents} ) => {
     useEffect(()=>{
         setNumberStudents([minNum, maxNum]);
     }, [minNum, maxNum]);
+
+    useEffect(() => { //для актульных данных при редактировании, а то было всегда 6 и 18
+        setMinNum(numberStudents[0]);
+        setMaxNum(numberStudents[1]);
+    }, [numberStudents]);
     
     return(
         <>

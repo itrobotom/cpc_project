@@ -2,19 +2,26 @@ import { React, useEffect, useState, useCallback } from 'react';
 import { TextField, Typography, Box, Grid }  from '@mui/material';
 
 const AgeInterval=( {ageRangeProgram, setAgeRangeProgram} ) => {
+    
     const [minAge, setMinAge] = useState(ageRangeProgram[0]);
     const [maxAge, setMaxAge] = useState(ageRangeProgram[1]);
 
-    const handleMinAge = useCallback((num) => {
+    const handleMinAge = ((num) => {
         setMinAge(Number(num.target.value));
-    }, []);
-    const handleMaxAge = useCallback((num) => {
+    });
+    const handleMaxAge = ((num) => {
         setMaxAge(Number(num.target.value));
-    }, []);
+    });
 
     useEffect(()=>{
         setAgeRangeProgram([minAge, maxAge]);
     }, [minAge, maxAge])
+
+    //console.log("Получили данные о возрасте в компонент AgeInterval ", ageRangeProgram);
+    useEffect(() => { //для актульных данных при редактировании, а то было всегда 6 и 18
+        setMinAge(ageRangeProgram[0]);
+        setMaxAge(ageRangeProgram[1]);
+    }, [ageRangeProgram]);
     
     return(
         <>

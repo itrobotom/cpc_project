@@ -39,6 +39,10 @@ function PopupConsultation({isOpenPopupClick, onClose}) {
                 <a href="https://cpc.tomsk.ru/nashi-sotrudniki/dil-sofya-viktorovna/" target="_blank" rel="noopener noreferrer">
                     Шутовой Софье Викторовне
                 </a> 
+                ,{' '}
+                <a href="https://cpc.tomsk.ru/nashi-sotrudniki/basurmanova-olga-aleksandrovna-2/" target="_blank" rel="noopener noreferrer">
+                    Дранице Ольге Александровне
+                </a> 
                 {' '} (контактные данные на личных страницах специалистов). 
             </Box>
         </Dialog>

@@ -14,7 +14,7 @@ import "../detailsProgram/DetailsProgram.css"
 
 import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import { ImageSlider } from '../imageSlider/ImageSlider';
 import { baseUrlApi } from '../constants';
 
@@ -41,6 +41,8 @@ export function DetailsProgram() {
     const handleClosePopup = () => {
         setPopupVisible(false);
     };
+
+    const isMobile = useMediaQuery('(max-width:600px)');
     
     useEffect(() => {
         // Запрашиваем нужную программу по id
@@ -102,10 +104,10 @@ export function DetailsProgram() {
                             ml='auto' 
                             mr='auto'
                             // pl='10px'
-                            sx = {{ pt: 0, width: "85%", overflow: 'auto'}}
+                            sx = {{ pt: 0, width: isMobile ? "95%" : "85%", overflow: 'auto'}}
                         >
                             
-                            <Box >
+                            <Box>
                                 {/* проверим если авторизован то покажем кнопку редактировать программу */}
                                 {(data !== undefined && data !== null) && (
                                     <Box sx={{display: "flex", justifyContent: "end"}}>
@@ -123,13 +125,18 @@ export function DetailsProgram() {
                                 <Box
                                     sx={{ display: 'flex'}} 
                                 >
-                                    <IconButton  
-                                    sx = {{ mb: 2, mr: 0 }}
+                                    <RouterLink
+                                        to={'/learn'}
                                     >
-                                        <ArrowBackIcon />
-                                    </IconButton>
+                                        <IconButton  
+                                        sx = {{ mb: 2, mr: 0 }}
+                                        >
+                                            <ArrowBackIcon />
+                                        </IconButton>
+                                    </RouterLink>
+                                    
                                     <Typography 
-                                        ml='0px' color="#000000" variant="h4" gutterBottom
+                                        ml='0px' color="#000000" variant= {isMobile ? "h5" : "h4"} gutterBottom
                                         sx = {{ pt: 0 }}
                                     >
                                         {dataProgram.titleProgram}
@@ -155,7 +162,7 @@ export function DetailsProgram() {
                                                 sx={{
                                                     pt: 1,
                                                     pl: 2,
-                                                    width: { xs: '100%', md: '100%', lg: '50%' },
+                                                    width: { xs: '95%', md: '95%', lg: '50%' },
                                                     fontSize: '18px',
                                                     textAlign: 'justify',
                                                 }}
@@ -163,6 +170,7 @@ export function DetailsProgram() {
                                                 {dataProgram.textProgram}
                                             </Typography>
                                             <Box sx={{ width: { xs: '100%', md: '100%', lg: '50%' } }}>
+                                                {/* добавить скелетон, если изображение не прогрузилось */}
                                                 <ImageSlider arr_img_url={dataProgram.arrLinkImg} />
                                             </Box>
                                         </>
@@ -195,7 +203,9 @@ export function DetailsProgram() {
                                         </TableRow>
                                         <TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Возраст:</TableCell>
-                                            <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>{`${dataProgram.ageRangeProgram[0]}-${dataProgram.ageRangeProgram[1]} лет`}</TableCell>
+                                            {dataProgram.ageRangeProgram[0] === dataProgram.ageRangeProgram[1] ? 
+                                            (<TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>{`${dataProgram.ageRangeProgram[0]} лет`}</TableCell>) :
+                                            (<TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>{`${dataProgram.ageRangeProgram[0]}-${dataProgram.ageRangeProgram[1]} лет`}</TableCell>)}
                                         </TableRow>
                                         <TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Срок обучения:</TableCell>
@@ -215,21 +225,22 @@ export function DetailsProgram() {
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Специализация:</TableCell>
                                             <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>{dataProgram.typesProgram.join(', ')}</TableCell>
                                         </TableRow>
-                                        <TableRow>
+                                        
+                                        {dataProgram.fileUrl && 
+                                        (<TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Скачать программу: </TableCell>
                                             <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>
                                                 <Link href={`${baseUrlApi}${dataProgram.fileUrl}`} target="_blank" rel="noopener noreferrer">
                                                     текст программы
                                                 </Link>
                                             </TableCell>
-                                        </TableRow>
-                                        
+                                        </TableRow>)}
                                                 
                                         <TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', verticalAlign: 'top', fontSize: '18px' }} >Подойдет ли программа ребенку?</TableCell>
                                             <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>
                                                 <Link href="https://testometrika.com/business/test-to-determine-career/" target="_blank" rel="noopener noreferrer">
-                                                Пройти тест 
+                                                    Пройти тест 
                                                 </Link> 
                                                 {' '}Климова на профориентацию или{' '}
                                                 {/* <Link href="#" target="_blank" rel="noopener noreferrer">
@@ -245,26 +256,46 @@ export function DetailsProgram() {
                                             </TableCell>
                                         </TableRow>
 
-                                        {dataProgram.linkVideo &&
-                                        (<TableRow>
-                                            <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px', verticalAlign: 'top' }} >
-                                                {dataProgram.commentVideo}
-                                            </TableCell>
-                                            <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>
-                                            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
-                                                <iframe
-                                                    title="YouTube Video"
-                                                    width="100%"
-                                                    height="100%"
-                                                    src={dataProgram.linkVideo}
-                                                    frameBorder="0"
-                                                    allowFullScreen
-                                                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                                                />
-                                            </div>
-                                            </TableCell>
-                                        </TableRow>)}
+                                        {dataProgram.linkVideo && (
+                                            isMobile ? (
+                                                <TableRow>
+                                                    <TableCell colSpan={2} style={{ borderBottom: 'none', padding: 0 }}>
+                                                        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
+                                                            <iframe
+                                                                title="YouTube Video"
+                                                                width="100%"
+                                                                height="100%"
+                                                                src={dataProgram.linkVideo}
+                                                                frameBorder="0"
+                                                                allowFullScreen
+                                                                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                                                            />
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ) : (
+                                                <TableRow>
+                                                    <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px', verticalAlign: 'top' }}>
+                                                        {dataProgram.commentVideo}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>
+                                                        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
+                                                            <iframe
+                                                                title="YouTube Video"
+                                                                width="100%"
+                                                                height="100%"
+                                                                src={dataProgram.linkVideo}
+                                                                frameBorder="0"
+                                                                allowFullScreen
+                                                                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                                                            />
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        )}
 
+                                        
                                         {dataProgram.linkPosts.length !== 0 &&
                                         (<TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}> Новостные посты, освещающие деятельность, достижения обучающихся: </TableCell>
@@ -279,6 +310,7 @@ export function DetailsProgram() {
                                             </TableCell>
                                         </TableRow>)}
 
+                                        {/* ссылка на группу */}
                                         {dataProgram.linkGroup && 
                                         (<TableRow >
                                             {/* О том, чем занимаются дети рассказываем в социальных сетях. Как проходят занятия, участие в соревнованиях, конкурсах. Следите за нашими новостями! */}
@@ -306,6 +338,15 @@ export function DetailsProgram() {
                                             </TableCell>
                                         </TableRow>)}
                                         
+                                        {dataProgram.instructors[0].accountId && 
+                                        (<TableRow>
+                                            <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Остались вопросы?</TableCell>
+                                            <TableCell style={{ width: `${PERCENT_RIGHT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }}>
+                                                <a href={`https://web.vk.me/convo/${dataProgram.instructors[0].accountId}`} target="_blank" rel="noopener noreferrer">НАПИШИТЕ</a>
+                                                {" "} свой вопрос педагогу в Сферум.
+                                            </TableCell>
+                                        </TableRow>)}
+
                                         {dataProgram.commentProgram && 
                                         (<TableRow>
                                             <TableCell style={{ width: `${PERCENT_LEFT_COLUMN}%`, borderBottom: 'none', fontSize: '18px' }} >Комментарий:</TableCell>
@@ -327,7 +368,7 @@ export function DetailsProgram() {
                                     >
                                         Галерея
                                     </Typography>
-                                    <ImageList sx={{ width: 1200, height: heightGalery }} cols={2} rowHeight={164}>
+                                    <ImageList sx={{ maxWidth: isMobile ? '100%' : 1200, height: heightGalery }} cols={isMobile ? 1 : 2}  rowHeight={164}>
                                         {dataProgram.arrLinkImg.map((item) => (
                                             <ImageListItem key={item}>
                                             <img

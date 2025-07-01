@@ -1,11 +1,4 @@
-//импорт главной страницы из page
-//в ней и реализовать проверку на авторизацию потом, когда будет кабинет
-
-
-
-//импорт страницы с деталями программы
-//импорт всего, что будет связано с роутдомом
-//
+//для локального сервера поменять axios и constants.js (где выбираем запросы на домен)
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CatalogProgramsPage } from "./pages/catalogProgramsPage/CatalogProgramsPage"
 import { DetailsProgramPage } from "./pages/detailsProgramPage/DetailsProgramPage"
@@ -37,7 +30,8 @@ function App() {
 			element: <CatalogProgramsPage />,
 		},
 		{
-			path: "/learn/description_programm/:programm_id",
+			// path: "/learn/description_programm/:programm_id",
+			path: "/description_programm/:programm_id",
 			element: <DetailsProgramPage />,
 		},
 		{

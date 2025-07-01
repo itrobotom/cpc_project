@@ -22,8 +22,16 @@ export const ContactTeacher = () => {
 
     const handleChange = (event) => {
         setTitleProgram(event.target.value); //делаетсят олько для перерендера и отображения нового значения в выпадающем меню
-        setAccountId(event.target.value);
-        console.log("id чата", event.target.value);
+        const selectedTitleProgram = event.target.value;
+        // Найти объект программы по названию программы
+        const selectedProgram = programs.items.find(program => program.titleProgram === selectedTitleProgram);
+        // Если программа найдена, извлечь accountId
+        if (selectedProgram) {
+            const selectedAccountId = selectedProgram.instructors[0].accountId;
+            console.log("id чата", selectedAccountId);
+            // Теперь вы можете использовать selectedAccountId для дальнейших действий
+            setAccountId(selectedAccountId);
+        }
     };
     const dispatch = useDispatch();
     
@@ -57,13 +65,14 @@ export const ContactTeacher = () => {
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={titleProgram}
+                            // value={titleProgram}
                             label="Образовательная программа"
                             onChange={handleChange}
                             sx={{ minWidth: 200 }} // Минимальная ширина, чтобы предотвратить слишком сильное сжатие
                         >
                             {programs.items.map((program) => (
-                                <MenuItem key={program.id} value={program.instructors[0].accountId}>
+                                // value={program.instructors[0].accountId}>
+                                <MenuItem key={program.id} value={program.titleProgram}>
                                     {program.titleProgram}
                                 </MenuItem>
                             ))}

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from "moment";
 
 const selectTypeNewsDefault = ["технические направления и инженерия", 
                                     "гуманитарные и социальные",
@@ -12,7 +13,7 @@ const selectTypeNewsDefault = ["технические направления и
 
 const INIT_FILTER_STATE = {
     nameNews: "",
-    yearRange: { "min": 2000, "max": 2024 },
+    yearRange: { "min": 2000, "max": moment().year() },
     type: selectTypeNewsDefault,
 }
 
